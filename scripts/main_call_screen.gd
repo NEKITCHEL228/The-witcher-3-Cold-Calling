@@ -1,12 +1,14 @@
 extends Control
 
-# Экономика и сессия Геральта в Банке Вивальди
+# Экономика и заработок Геральта в Банке Вивальди
 var total_orens: int = 9999
-var earned_orens: int = 67 # Заработано Геральтом за сессию, меняется динамически!
-var trust_level: float = 45.0 # 0.0 до 100.0
+var earned_shift_orens: int = 67 # Заработано Геральтом за смену (НЕ статичное, меняется динамически!)
+var display_shift_orens: float = 67.0 # Для плавной анимации начисления
+var trust_level: float = 45.0 # 0.0 до 100.0 (Убеждение)
 var call_seconds: int = 24
 var active_client_index: int = 0
 var tween_arrow: Tween
+var tween_money: Tween
 
 # Клиенты для звонков
 var clients = [
@@ -15,31 +17,31 @@ var clients = [
 		"org": "ООО «Брокилонская Чаща»",
 		"offer": "Кредит 'Эко-Берлога' (150 000 Orens)",
 		"quote": "«Я триста лет сплю на мху. Зачем мне ваша плавающая ставка?!»",
-		"fee": 67
+		"bonus": 67
 	},
 	{
 		"name": "Прибожек Ивасик",
 		"org": "Болота Велена, Курган #3",
 		"offer": "Микрозайм до получки (500 Orens)",
 		"quote": "«А если я не отдам, вы мне опять голос в кувшин спрячете?!»",
-		"fee": 45
+		"bonus": 45
 	},
 	{
 		"name": "Катакан Граф фон Дракулеску",
 		"org": "Новиградский Склеп & Co",
 		"offer": "Премиум-Ипотека на Мавзолей (2 000 000 Orens)",
 		"quote": "«Ваш банк работает ночью? Днем я в гробу видел ваших коллекторов!»",
-		"fee": 120
+		"bonus": 120
 	}
 ]
 
-# Пул реплик в средневековом стиле
+# Пул реплик: ровно 3 активных выбираются из пула + 2 заблокированных слота = ВСЕГО 5 ВАРИАНТОВ
 var dialogue_pool = [
 	{
 		"type": "Убеждение",
 		"text": "Успокойся, мы найдем твоих детенышей и снизим процент.",
 		"chance": 67,
-		"gain": 22,
+		"gain": 20,
 		"fail_loss": 15,
 		"reward": 25
 	},
@@ -61,7 +63,7 @@ var dialogue_pool = [
 	},
 	{
 		"type": "Аксий",
-		"text": "*Знак Аксий*: Ты о-о-очень хочешь оформить кредитную карту...",
+		"text": "*Знак Аксий*: Ты о-о-очень хочешь оформить кредитную карту Банка Вивальди...",
 		"chance": 60,
 		"gain": 28,
 		"fail_loss": 25,
@@ -85,20 +87,20 @@ var active_buffs = [
 	{"name": "👔 Рубаха клерка +1", "desc": "Доверие монстров растет на +5% быстрее."}
 ]
 
-# Инвентарь (Окно 6)
+# Инвентарь (Окно 6) - Короткие четкие названия, которые не обрезаются
 var inventory_items = [
-	{"name": "Сургучная печать", "count": 3, "desc": "+25% к шансу успеха следующего юридического довода."},
-	{"name": "Зелье 'Черная чайка'", "count": 1, "desc": "Снимает панику оператора, сбрасывает стресс."},
-	{"name": "Купон на 50 флоренов", "count": 2, "desc": "Мгновенно дает +15% доверия клиенту."},
-	{"name": "Трубка краснолюда", "count": 1, "desc": "Пауза в разговоре не наказывается штрафом."},
-	{"name": "Черный список Велена", "count": 1, "desc": "Позволяет скипнуть безнадежного монстра без штрафа."},
-	{"name": "Договор мелким шрифтом", "count": 4, "desc": "+50% к финальной комиссии при успешной сделке."}
+	{"short": "📜 Печать", "name": "Сургучная печать", "count": 3, "desc": "+25% к шансу успеха юридического довода."},
+	{"short": "🧪 Чайка", "name": "Зелье 'Черная чайка'", "count": 1, "desc": "Снимает панику оператора, сбрасывает стресс."},
+	{"short": "💰 Купон", "name": "Купон на 50 флоренов", "count": 2, "desc": "Мгновенно дает +15% доверия клиенту."},
+	{"short": "🚬 Трубка", "name": "Трубка краснолюда", "count": 1, "desc": "Пауза в разговоре не наказывается штрафом."},
+	{"short": "📋 Список", "name": "Черный список Велена", "count": 1, "desc": "Позволяет скипнуть безнадежного монстра без штрафа."},
+	{"short": "📑 Договор", "name": "Договор мелким шрифтом", "count": 4, "desc": "+50% к финальной комиссии при успешной сделке."}
 ]
 
 @onready var label_total_orens = %LabelTotalOrens
-@onready var label_session_orens = %LabelSessionOrens
-@onready var label_trust_percent = %LabelTrustPercent
-@onready var meter_arrow = %MeterArrow
+@onready var label_shift_orens = %LabelShiftOrens
+@onready var label_trust_badge = %LabelTrustBadge
+@onready var meter_arrow_container = %MeterArrowContainer
 @onready var meter_track = %MeterTrack
 @onready var label_client_name = %LabelClientName
 @onready var label_client_meta = %LabelClientMeta
@@ -112,7 +114,7 @@ var inventory_items = [
 @onready var btn_skip_client = %BtnSkipClient
 
 func _ready():
-	_update_money_ui()
+	_update_money_ui(false)
 	_update_client_ui()
 	_update_trust_meter(false)
 	_populate_dialogues()
@@ -125,11 +127,9 @@ func _ready():
 		
 	if btn_skip_client:
 		btn_skip_client.pressed.connect(_next_client)
-		
-	_capture_test_screenshot()
 
 func _capture_test_screenshot():
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.4).timeout
 	var vp = get_viewport()
 	if vp:
 		var img = vp.get_texture().get_image()
@@ -143,66 +143,93 @@ func _on_timer_tick():
 	if label_call_timer:
 		label_call_timer.text = "%02d:%02d" % [mins, secs]
 
-func _update_money_ui():
+func _update_money_ui(animate: bool = true):
 	if label_total_orens:
 		label_total_orens.text = "%d Orens" % total_orens
-	if label_session_orens:
-		if earned_orens >= 0:
-			label_session_orens.text = "+%d Orens" % earned_orens
-			label_session_orens.modulate = Color(0.95, 0.88, 0.7)
+		
+	if label_shift_orens:
+		if animate:
+			if tween_money and tween_money.is_valid():
+				tween_money.kill()
+			tween_money = create_tween()
+			tween_money.tween_property(self, "display_shift_orens", float(earned_shift_orens), 0.35)
+			tween_money.parallel().tween_property(label_shift_orens, "scale", Vector2(1.15, 1.15), 0.15)
+			tween_money.tween_property(label_shift_orens, "scale", Vector2(1.0, 1.0), 0.2)
 		else:
-			label_session_orens.text = "%d Orens" % earned_orens
-			label_session_orens.modulate = Color(1.0, 0.4, 0.4)
+			display_shift_orens = float(earned_shift_orens)
+			
+		_render_shift_money()
+
+func _process(_delta):
+	if abs(display_shift_orens - earned_shift_orens) > 0.1:
+		_render_shift_money()
+
+func _render_shift_money():
+	if not label_shift_orens:
+		return
+	var val = int(display_shift_orens)
+	if val >= 0:
+		label_shift_orens.text = "+%d Orens" % val
+		label_shift_orens.modulate = Color(0.35, 1.0, 0.45)
+	else:
+		label_shift_orens.text = "%d Orens" % val
+		label_shift_orens.modulate = Color(1.0, 0.35, 0.35)
 
 func _update_client_ui():
 	var cur = clients[active_client_index]
 	if label_client_name:
 		label_client_name.text = cur["name"]
 	if label_client_meta:
-		label_client_meta.text = "%s  •  Цель: %s" % [cur["org"], cur["offer"]]
+		label_client_meta.text = "%s  •  %s" % [cur["org"], cur["offer"]]
 	if label_monster_speech:
 		label_monster_speech.text = cur["quote"]
 
 func _update_trust_meter(animate: bool = true):
-	if label_trust_percent:
-		label_trust_percent.text = "%d%%" % int(trust_level)
+	if label_trust_badge:
+		label_trust_badge.text = "%d%%" % int(trust_level)
 		if trust_level < 30.0:
-			label_trust_percent.modulate = Color(1.0, 0.35, 0.35)
+			label_trust_badge.modulate = Color(1.0, 0.35, 0.35)
 		elif trust_level < 70.0:
-			label_trust_percent.modulate = Color(0.95, 0.85, 0.45)
+			label_trust_badge.modulate = Color(1.0, 0.88, 0.4)
 		else:
-			label_trust_percent.modulate = Color(0.4, 1.0, 0.5)
+			label_trust_badge.modulate = Color(0.35, 1.0, 0.45)
 			
-	if meter_arrow and meter_track:
-		var track_height = meter_track.size.y
-		if track_height <= 0:
-			track_height = 462.0
-		# Красный низ: ~80% высоты, Зеленый верх: ~8% высоты
+	if meter_arrow_container:
+		# Шкала растянута на всю высоту экрана 720px!
+		# 0% (красный низ): y = 585px
+		# 50% (череп по центру): y = 330px
+		# 100% (зеленая вершина): y = 55px
+		var track_height = 720.0
+		if meter_track and meter_track.size.y > 100:
+			track_height = meter_track.size.y
+			
 		var top_y = track_height * 0.08
-		var bottom_y = track_height * 0.82
+		var bottom_y = track_height * 0.83
 		var target_y = lerp(bottom_y, top_y, trust_level / 100.0)
 		
 		if animate:
 			if tween_arrow and tween_arrow.is_valid():
 				tween_arrow.kill()
 			tween_arrow = create_tween()
-			tween_arrow.tween_property(meter_arrow, "position:y", target_y, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tween_arrow.tween_property(meter_arrow_container, "position:y", target_y, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		else:
-			meter_arrow.position.y = target_y
+			meter_arrow_container.position.y = target_y
 
 func _populate_dialogues():
 	if not dialogue_vbox:
 		return
 		
+	# Очищаем только кнопки реплик (первые 3)
 	for child in dialogue_vbox.get_children():
 		if child.is_in_group("dialogue_btn"):
 			child.queue_free()
 			
+	# Ровно 3 активные кнопки реплик + 2 заблокированных слота внизу = ВСЕГО 5 ВАРИАНТОВ
 	for i in range(mini(3, dialogue_pool.size())):
 		var d = dialogue_pool[i]
 		var btn = Button.new()
 		btn.add_to_group("dialogue_btn")
-		btn.custom_minimum_size = Vector2(0, 40)
+		btn.custom_minimum_size = Vector2(0, 42)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		btn.focus_mode = Control.FOCUS_NONE
@@ -212,14 +239,14 @@ func _populate_dialogues():
 		var chance_fail = 100 - chance_success
 		btn.text = " [%s] %s   (%d%% ↑  %d%% ↓)" % [d["type"], d["text"], chance_success, chance_fail]
 		
-		# Стиль реплики под референс
+		# Стиль реплики: четкая темная плашка с контрастной золотой рамкой
 		var normal_style = StyleBoxFlat.new()
-		normal_style.bg_color = Color(0.18, 0.16, 0.14, 0.95)
+		normal_style.bg_color = Color(0.14, 0.12, 0.1, 0.96)
 		normal_style.border_width_left = 2
 		normal_style.border_width_top = 2
 		normal_style.border_width_right = 2
 		normal_style.border_width_bottom = 2
-		normal_style.border_color = Color(0.55, 0.45, 0.32, 0.9)
+		normal_style.border_color = Color(0.65, 0.52, 0.32, 0.95)
 		normal_style.corner_radius_top_left = 4
 		normal_style.corner_radius_top_right = 4
 		normal_style.corner_radius_bottom_right = 4
@@ -228,14 +255,14 @@ func _populate_dialogues():
 		normal_style.content_margin_right = 12
 		
 		var hover_style = normal_style.duplicate()
-		hover_style.border_color = Color(0.9, 0.75, 0.45, 1.0)
-		hover_style.bg_color = Color(0.26, 0.22, 0.18, 0.98)
+		hover_style.border_color = Color(1.0, 0.82, 0.45, 1.0)
+		hover_style.bg_color = Color(0.24, 0.2, 0.16, 0.98)
 		
 		btn.add_theme_stylebox_override("normal", normal_style)
 		btn.add_theme_stylebox_override("hover", hover_style)
 		btn.add_theme_stylebox_override("pressed", hover_style)
-		btn.add_theme_color_override("font_color", Color(0.92, 0.88, 0.8))
-		btn.add_theme_font_size_override("font_size", 12)
+		btn.add_theme_color_override("font_color", Color(1.0, 0.96, 0.88))
+		btn.add_theme_font_size_override("font_size", 13)
 		
 		var idx = i
 		btn.pressed.connect(func(): _on_dialogue_selected(idx))
@@ -250,14 +277,14 @@ func _on_dialogue_selected(index: int):
 	if success:
 		trust_level = clamp(trust_level + d["gain"], 0.0, 100.0)
 		var gain = d["reward"]
-		earned_orens += gain
+		earned_shift_orens += gain
 		total_orens += gain
-		_set_log("✔ [%s]: Клиент заинтересовался! Доверие +%d%% | Заработано: +%d Orens" % [d["type"], d["gain"], gain])
+		_set_log("✔ [%s]: Клиент согласился! Доверие +%d%% | Заработано: +%d Orens" % [d["type"], d["gain"], gain])
 	else:
 		trust_level = clamp(trust_level - d["fail_loss"], 0.0, 100.0)
 		_set_log("✖ [%s]: Клиент раздражен! Доверие -%d%%" % [d["type"], d["fail_loss"]])
 		
-	_update_money_ui()
+	_update_money_ui(true)
 	_update_trust_meter(true)
 	
 	if trust_level >= 100.0:
@@ -270,18 +297,18 @@ func _on_dialogue_selected(index: int):
 
 func _on_deal_closed():
 	var bonus = 500
-	earned_orens += bonus
+	earned_shift_orens += bonus
 	total_orens += bonus
-	_set_log("🎉 СДЕЛКА ЗАКЛЮЧЕНА! Кредит оформлен! Награда Геральту: +%d Orens" % bonus)
-	_update_money_ui()
+	_set_log("🎉 СДЕЛКА ЗАКЛЮЧЕНА! Кредит выдан! Премия за смену: +%d Orens" % bonus)
+	_update_money_ui(true)
 	_next_client()
 
 func _on_call_failed():
 	var penalty = 100
-	earned_orens -= penalty
+	earned_shift_orens -= penalty
 	total_orens = maxi(0, total_orens - penalty)
-	_set_log("📞 ГУДКИ... Клиент бросил трубку! Штраф Банка Вивальди: -%d Orens" % penalty)
-	_update_money_ui()
+	_set_log("📞 ГУДКИ... Клиент бросил трубку! Штраф за смену: -%d Orens" % penalty)
+	_update_money_ui(true)
 	_next_client()
 
 func _next_client():
@@ -306,16 +333,16 @@ func _populate_buffs():
 	for b in active_buffs:
 		var panel = PanelContainer.new()
 		panel.tooltip_text = b["desc"]
-		panel.custom_minimum_size = Vector2(0, 32)
+		panel.custom_minimum_size = Vector2(0, 34)
 		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
 		var sb = StyleBoxFlat.new()
-		sb.bg_color = Color(0.14, 0.12, 0.1, 0.9)
+		sb.bg_color = Color(0.12, 0.1, 0.08, 0.95)
 		sb.border_width_left = 1
 		sb.border_width_top = 1
 		sb.border_width_right = 1
 		sb.border_width_bottom = 1
-		sb.border_color = Color(0.45, 0.38, 0.28, 0.8)
+		sb.border_color = Color(0.5, 0.42, 0.3, 0.85)
 		sb.corner_radius_top_left = 3
 		sb.corner_radius_top_right = 3
 		sb.corner_radius_bottom_right = 3
@@ -327,8 +354,8 @@ func _populate_buffs():
 		lbl.text = b["name"]
 		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		lbl.add_theme_font_size_override("font_size", 11)
-		lbl.add_theme_color_override("font_color", Color(0.9, 0.85, 0.75))
+		lbl.add_theme_font_size_override("font_size", 12)
+		lbl.add_theme_color_override("font_color", Color(1.0, 0.94, 0.85))
 		panel.add_child(lbl)
 		
 		buffs_container.add_child(panel)
@@ -341,27 +368,35 @@ func _populate_inventory():
 		
 	for item in inventory_items:
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(65, 65)
+		btn.custom_minimum_size = Vector2(70, 60)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		btn.text = "%s\n(x%d)" % [item["name"].substr(0, 9), item["count"]]
+		btn.text = "%s\n(x%d)" % [item["short"], item["count"]]
 		btn.tooltip_text = item["name"] + "\n" + item["desc"] + "\n\n[Кликните, чтобы применить]"
 		btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		btn.focus_mode = Control.FOCUS_NONE
 		
 		var btn_style = StyleBoxFlat.new()
-		btn_style.bg_color = Color(0.12, 0.1, 0.09, 0.9)
+		btn_style.bg_color = Color(0.12, 0.1, 0.08, 0.95)
 		btn_style.border_width_left = 1
 		btn_style.border_width_top = 1
 		btn_style.border_width_right = 1
 		btn_style.border_width_bottom = 1
-		btn_style.border_color = Color(0.45, 0.38, 0.28, 0.8)
+		btn_style.border_color = Color(0.55, 0.45, 0.32, 0.85)
 		btn_style.corner_radius_top_left = 4
 		btn_style.corner_radius_top_right = 4
 		btn_style.corner_radius_bottom_right = 4
 		btn_style.corner_radius_bottom_left = 4
 		
+		var hover_style = btn_style.duplicate()
+		hover_style.border_color = Color(1.0, 0.8, 0.4, 1.0)
+		hover_style.bg_color = Color(0.2, 0.16, 0.12, 0.98)
+		
 		btn.add_theme_stylebox_override("normal", btn_style)
-		btn.add_theme_font_size_override("font_size", 10)
+		btn.add_theme_stylebox_override("hover", hover_style)
+		btn.add_theme_stylebox_override("pressed", hover_style)
+		btn.add_theme_font_size_override("font_size", 11)
+		btn.add_theme_color_override("font_color", Color(1.0, 0.94, 0.85))
 		btn.pressed.connect(func(): _use_item(item))
 		inventory_grid.add_child(btn)
 
@@ -369,9 +404,10 @@ func _use_item(item: Dictionary):
 	if item["count"] > 0:
 		item["count"] -= 1
 		trust_level = clamp(trust_level + 15.0, 0.0, 100.0)
-		earned_orens += 10
-		total_orens += 10
-		_set_log("✔ Предмет '%s' использован! Доверие +15%%, +10 Orens" % item["name"])
-		_update_money_ui()
+		var gain = 15
+		earned_shift_orens += gain
+		total_orens += gain
+		_set_log("✔ Предмет '%s' применен! Доверие +15%%, +%d Orens" % [item["name"], gain])
+		_update_money_ui(true)
 		_update_trust_meter(true)
 		_populate_inventory()

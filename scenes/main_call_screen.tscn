@@ -1,50 +1,88 @@
-[gd_scene load_steps=12 format=3 uid="uid://d388s2v7tq6x7"]
+[gd_scene format=3 uid="uid://d388s2v7tq6x7"]
 
-[ext_resource type="Script" path="res://scripts/main_call_screen.gd" id="1_main"]
-[ext_resource type="Texture2D" path="res://assets/geralt_panel_ready.png" id="2_geralt"]
-[ext_resource type="Texture2D" path="res://assets/trust_meter_ready.png" id="3_meter"]
-[ext_resource type="Texture2D" path="res://assets/pointer_arrow.png" id="4_arrow"]
-[ext_resource type="Texture2D" path="res://assets/monster_panel_ready.png" id="5_monster"]
-[ext_resource type="Texture2D" path="res://assets/dialogue_parchment_clean_base.png" id="6_parchment"]
-[ext_resource type="Texture2D" path="res://assets/dialogue_slot_locked.png" id="7_locked"]
+[ext_resource type="Script" uid="uid://bpoeftjkvexm1" path="res://scripts/main_call_screen.gd" id="1_main"]
+[ext_resource type="Texture2D" uid="uid://buqystvmo5j4u" path="res://assets/geralt_portrait_base.png" id="2_geralt"]
+[ext_resource type="Texture2D" uid="uid://dph44dygh56xy" path="res://assets/trust_meter_ready.png" id="3_meter"]
+[ext_resource type="Texture2D" uid="uid://bb7edieekwqul" path="res://assets/pointer_arrow.png" id="4_arrow"]
+[ext_resource type="Texture2D" uid="uid://ba1ga82mujfa2" path="res://assets/monster_panel_ready.png" id="5_monster"]
+[ext_resource type="Texture2D" uid="uid://vvblc28g5t1a" path="res://assets/dialogue_parchment_clean_base.png" id="6_parchment"]
+[ext_resource type="Texture2D" uid="uid://gsvypysyfe5f" path="res://assets/dialogue_slot_locked.png" id="7_locked"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_FrameWood"]
-bg_color = Color(0.1, 0.08, 0.07, 0.95)
+bg_color = Color(0.09, 0.08, 0.06, 0.96)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.48, 0.38, 0.26, 0.9)
+border_color = Color(0.5, 0.4, 0.28, 0.95)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_MeterPanel"]
-bg_color = Color(0.08, 0.07, 0.06, 0.95)
+[sub_resource type="StyleBoxFlat" id="StyleBox_MoneyPlate"]
+bg_color = Color(0.1, 0.08, 0.06, 0.96)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.4, 0.34, 0.25, 0.8)
+border_color = Color(0.72, 0.58, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_BarParchment"]
+bg_color = Color(0.12, 0.1, 0.08, 0.96)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.45, 0.32, 0.95)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_DarkParchment"]
-bg_color = Color(0.12, 0.1, 0.08, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.42, 0.35, 0.25, 0.8)
+[sub_resource type="StyleBoxFlat" id="StyleBox_LockedSlotFrame"]
+bg_color = Color(0.1, 0.08, 0.07, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.38, 0.28, 0.8)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="MainCallScreen" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBox_BadgeDeal"]
+bg_color = Color(0.08, 0.18, 0.1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.8, 0.4, 0.9)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_BadgeFail"]
+bg_color = Color(0.2, 0.06, 0.06, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.25, 0.25, 0.9)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="MainCallScreen" type="Control" unique_id=1603080036]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,206 +91,220 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_main")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=1105744888]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.07, 0.06, 0.05, 1)
+color = Color(0.06, 0.05, 0.04, 1)
 
-[node name="CallTimer" type="Timer" parent="."]
+[node name="CallTimer" type="Timer" parent="." unique_id=1454269135]
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="RootHBox" type="HBoxContainer" parent="." unique_id=918551140]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 8
+theme_override_constants/separation = 0
 
-[node name="MainLayout" type="HBoxContainer" parent="Margin"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="LeftCol" type="VBoxContainer" parent="Margin/MainLayout"]
+[node name="LeftColMargin" type="MarginContainer" parent="RootHBox" unique_id=3686000]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.15
-theme_override_constants/separation = 8
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
 
-[node name="GeraltPanel" type="PanelContainer" parent="Margin/MainLayout/LeftCol"]
+[node name="LeftCol" type="VBoxContainer" parent="RootHBox/LeftColMargin" unique_id=750904337]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="GeraltPanel" type="PanelContainer" parent="RootHBox/LeftColMargin/LeftCol" unique_id=616383132]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBox_FrameWood")
 
-[node name="TextureGeralt" type="TextureRect" parent="Margin/MainLayout/LeftCol/GeraltPanel"]
+[node name="TextureGeralt" type="TextureRect" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel" unique_id=72983004]
 layout_mode = 2
 texture = ExtResource("2_geralt")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="MoneyContainer" type="Control" parent="Margin/MainLayout/LeftCol/GeraltPanel"]
+[node name="GeraltUI" type="Control" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel" unique_id=384823458]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="LabelTotalOrens" type="Label" parent="Margin/MainLayout/LeftCol/GeraltPanel/MoneyContainer"]
-unique_name_in_owner = true
+[node name="ShiftMoneyPlate" type="PanelContainer" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI" unique_id=18649113]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 13.0
-offset_right = 105.0
-offset_bottom = 34.0
-theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
-theme_override_font_sizes/font_size = 14
-text = "9999 Orens"
-vertical_alignment = 1
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 215.0
+offset_bottom = 82.0
+theme_override_styles/panel = SubResource("StyleBox_MoneyPlate")
 
-[node name="LabelSessionOrens" type="Label" parent="Margin/MainLayout/LeftCol/GeraltPanel/MoneyContainer"]
+[node name="Margin" type="MarginContainer" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate" unique_id=761351202]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 4
+
+[node name="VBox" type="VBoxContainer" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate/Margin" unique_id=1122444845]
+layout_mode = 2
+alignment = 1
+
+[node name="RowTotal" type="HBoxContainer" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate/Margin/VBox" unique_id=994748279]
+layout_mode = 2
+
+[node name="LabelTotalTitle" type="Label" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate/Margin/VBox/RowTotal" unique_id=1821588148]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.8, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "КАЗНА: "
+
+[node name="LabelTotalOrens" type="Label" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate/Margin/VBox/RowTotal" unique_id=1531955759]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 16.0
-offset_top = 40.0
-offset_right = 105.0
-offset_bottom = 61.0
-theme_override_colors/font_color = Color(0.95, 0.88, 0.7, 1)
-theme_override_font_sizes/font_size = 14
-text = "+67 Orens"
-vertical_alignment = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.65, 1)
+theme_override_font_sizes/font_size = 13
+text = "9999 Orens 🪙"
 
-[node name="GeraltBadge" type="Label" parent="Margin/MainLayout/LeftCol/GeraltPanel/MoneyContainer"]
+[node name="RowShift" type="HBoxContainer" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate/Margin/VBox" unique_id=557707692]
+layout_mode = 2
+
+[node name="LabelShiftTitle" type="Label" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate/Margin/VBox/RowShift" unique_id=1343113887]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.8, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "ЗА СМЕНУ: "
+
+[node name="LabelShiftOrens" type="Label" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/ShiftMoneyPlate/Margin/VBox/RowShift" unique_id=2094113223]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 1, 0.45, 1)
+theme_override_font_sizes/font_size = 15
+text = "+67 Orens 💰"
+
+[node name="GeraltBottomBar" type="PanelContainer" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI" unique_id=1391806589]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -24.0
-offset_right = -10.0
+offset_left = 6.0
+offset_top = -28.0
+offset_right = -6.0
 offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.85, 0.8, 0.7, 0.85)
-theme_override_font_sizes/font_size = 11
-text = "● ОПЕРАТОР ГЕРАЛЬТ (КАЭР МОРХЕН -> НОВИГРАД) | ГАРНИТУРА: РОГ ВЫЗОВА"
-horizontal_alignment = 1
+theme_override_styles/panel = SubResource("StyleBox_BarParchment")
 
-[node name="DialogueParchmentPanel" type="PanelContainer" parent="Margin/MainLayout/LeftCol"]
+[node name="Label" type="Label" parent="RootHBox/LeftColMargin/LeftCol/GeraltPanel/GeraltUI/GeraltBottomBar" unique_id=1503641349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "● ОПЕРАТОР ГЕРАЛЬТ | ОТДЕЛ ВЗЫСКАНИЯ БАНКА ВИВАЛЬДИ | ГАРНИТУРА: РОГ ВЫЗОВА"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialogueParchmentPanel" type="PanelContainer" parent="RootHBox/LeftColMargin/LeftCol" unique_id=1355578359]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBox_FrameWood")
 
-[node name="TextureParchment" type="TextureRect" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel"]
+[node name="TextureParchment" type="TextureRect" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel" unique_id=405815799]
 layout_mode = 2
 texture = ExtResource("6_parchment")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Margin" type="MarginContainer" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel"]
+[node name="Margin" type="MarginContainer" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel" unique_id=568912666]
 layout_mode = 2
-theme_override_constants/margin_left = 22
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 22
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 10
 
-[node name="VBox" type="VBoxContainer" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin" unique_id=1788450595]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="LogLabel" type="Label" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel/Margin/VBox"]
+[node name="LogBar" type="PanelContainer" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox" unique_id=1225252774]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_BarParchment")
+
+[node name="MarginLog" type="MarginContainer" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/LogBar" unique_id=123103587]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="LogLabel" type="Label" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/LogBar/MarginLog" unique_id=173944931]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.3, 0.25, 0.2, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.75, 1)
 theme_override_font_sizes/font_size = 11
-text = "Выберите скрипт убеждения монстра..."
+text = "📜 СКРИПТЫ РАЗГОВОРА (5 ВАРИАНТОВ) | Выберите стратегию убеждения..."
 
-[node name="DialogueVBox" type="VBoxContainer" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel/Margin/VBox"]
+[node name="DialogueVBox" type="VBoxContainer" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox" unique_id=1177250180]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 4
 
-[node name="LockedSlot1" type="TextureRect" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox"]
+[node name="LockedSlot1" type="PanelContainer" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox" unique_id=1829953691]
 custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_LockedSlotFrame")
+
+[node name="Texture" type="TextureRect" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox/LockedSlot1" unique_id=697765859]
 layout_mode = 2
 texture = ExtResource("7_locked")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox/LockedSlot1"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.45, 0.38, 0.3, 1)
-theme_override_font_sizes/font_size = 11
-text = "🔒 СЛОТ ЗАБЛОКИРОВАН [Требуется перк: 'Красноречие II']"
+[node name="Label" type="Label" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox/LockedSlot1" unique_id=2144308806]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "🔒 Вариант 4 заблокирован [Требуется перк: 'Красноречие II']"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LockedSlot2" type="TextureRect" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox"]
+[node name="LockedSlot2" type="PanelContainer" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox" unique_id=1784199261]
 custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_LockedSlotFrame")
+
+[node name="Texture" type="TextureRect" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox/LockedSlot2" unique_id=1539907686]
 layout_mode = 2
 texture = ExtResource("7_locked")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="Margin/MainLayout/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox/LockedSlot2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.45, 0.38, 0.3, 1)
-theme_override_font_sizes/font_size = 11
-text = "🔒 СЛОТ ЗАБЛОКИРОВАН [Требуется мутаген: 'Скриптовый волк']"
+[node name="Label" type="Label" parent="RootHBox/LeftColMargin/LeftCol/DialogueParchmentPanel/Margin/VBox/DialogueVBox/LockedSlot2" unique_id=758641471]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "🔒 Вариант 5 заблокирован [Требуется мутаген: 'Скриптовый волк']"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenterCol" type="PanelContainer" parent="Margin/MainLayout"]
-custom_minimum_size = Vector2(96, 0)
+[node name="CenterCol" type="Control" parent="RootHBox" unique_id=1552870362]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_MeterPanel")
 
-[node name="Margin" type="MarginContainer" parent="Margin/MainLayout/CenterCol"]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 6
-
-[node name="VBox" type="VBoxContainer" parent="Margin/MainLayout/CenterCol/Margin"]
-layout_mode = 2
-alignment = 1
-
-[node name="LabelTrustPercent" type="Label" parent="Margin/MainLayout/CenterCol/Margin/VBox"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.45, 1)
-theme_override_font_sizes/font_size = 18
-text = "45%"
-horizontal_alignment = 1
-
-[node name="LabelDeal" type="Label" parent="Margin/MainLayout/CenterCol/Margin/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.95, 0.5, 1)
-theme_override_font_sizes/font_size = 9
-text = "100% СДЕЛКА"
-horizontal_alignment = 1
-
-[node name="MeterTrackContainer" type="Control" parent="Margin/MainLayout/CenterCol/Margin/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="MeterTrack" type="TextureRect" parent="Margin/MainLayout/CenterCol/Margin/VBox/MeterTrackContainer"]
+[node name="MeterTrack" type="TextureRect" parent="RootHBox/CenterCol" unique_id=882519252]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -262,179 +314,256 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_meter")
 expand_mode = 1
-stretch_mode = 5
 
-[node name="MeterArrow" type="TextureRect" parent="Margin/MainLayout/CenterCol/Margin/VBox/MeterTrackContainer"]
+[node name="BadgeDeal" type="PanelContainer" parent="RootHBox/CenterCol" unique_id=577306829]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_top = 8.0
+offset_right = 44.0
+offset_bottom = 28.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBox_BadgeDeal")
+
+[node name="Label" type="Label" parent="RootHBox/CenterCol/BadgeDeal" unique_id=1010128287]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "СДЕЛКА 100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BadgeFail" type="PanelContainer" parent="RootHBox/CenterCol" unique_id=549482100]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -28.0
+offset_right = 40.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBox_BadgeFail")
+
+[node name="Label" type="Label" parent="RootHBox/CenterCol/BadgeFail" unique_id=744081658]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "СБРОС 0%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MeterArrowContainer" type="HBoxContainer" parent="RootHBox/CenterCol" unique_id=826383808]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 18.0
-offset_top = 260.0
-offset_right = 44.0
-offset_bottom = 276.0
+offset_left = 4.0
+offset_top = 330.0
+offset_right = 96.0
+offset_bottom = 356.0
+theme_override_constants/separation = 4
+
+[node name="Arrow" type="TextureRect" parent="RootHBox/CenterCol/MeterArrowContainer" unique_id=108058013]
+custom_minimum_size = Vector2(26, 16)
+layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("4_arrow")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LabelFail" type="Label" parent="Margin/MainLayout/CenterCol/Margin/VBox"]
+[node name="BadgeValue" type="PanelContainer" parent="RootHBox/CenterCol/MeterArrowContainer" unique_id=1752848237]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.35, 0.35, 1)
-theme_override_font_sizes/font_size = 9
-text = "0% СБРОС"
-horizontal_alignment = 1
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBox_MoneyPlate")
 
-[node name="RightCol" type="VBoxContainer" parent="Margin/MainLayout"]
+[node name="LabelTrustBadge" type="Label" parent="RootHBox/CenterCol/MeterArrowContainer/BadgeValue" unique_id=319827179]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.4, 1)
+theme_override_font_sizes/font_size = 12
+text = " 45% "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightColMargin" type="MarginContainer" parent="RootHBox" unique_id=203552484]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.15
-theme_override_constants/separation = 8
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 6
 
-[node name="MonsterPanel" type="PanelContainer" parent="Margin/MainLayout/RightCol"]
+[node name="RightCol" type="VBoxContainer" parent="RootHBox/RightColMargin" unique_id=1982601463]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MonsterPanel" type="PanelContainer" parent="RootHBox/RightColMargin/RightCol" unique_id=1838841884]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBox_FrameWood")
 
-[node name="TextureMonster" type="TextureRect" parent="Margin/MainLayout/RightCol/MonsterPanel"]
+[node name="TextureMonster" type="TextureRect" parent="RootHBox/RightColMargin/RightCol/MonsterPanel" unique_id=831829764]
 layout_mode = 2
 texture = ExtResource("5_monster")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="ClientOverlay" type="MarginContainer" parent="Margin/MainLayout/RightCol/MonsterPanel"]
+[node name="ClientOverlay" type="MarginContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel" unique_id=1513148377]
 layout_mode = 2
-theme_override_constants/margin_left = 18
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 18
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
 
-[node name="VBox" type="VBoxContainer" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay"]
-layout_mode = 2
-
-[node name="TopRow" type="HBoxContainer" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox"]
+[node name="VBox" type="VBoxContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay" unique_id=1552931064]
 layout_mode = 2
 
-[node name="LabelClientName" type="Label" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox/TopRow"]
-unique_name_in_owner = true
+[node name="TopBar" type="PanelContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox" unique_id=2002264588]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.9, 0.8, 1)
-theme_override_font_sizes/font_size = 15
-text = "Леший «Древний»"
+theme_override_styles/panel = SubResource("StyleBox_BarParchment")
 
-[node name="Spacer" type="Control" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox/TopRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CallBadge" type="Label" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox/TopRow"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
-theme_override_font_sizes/font_size = 11
-text = "📡 ВХОДЯЩИЙ |"
-
-[node name="LabelCallTimer" type="Label" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox/TopRow"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
-theme_override_font_sizes/font_size = 12
-text = "00:24"
-
-[node name="BtnSkipClient" type="Button" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox/TopRow"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 11
-text = "Сброс 📞"
-
-[node name="LabelClientMeta" type="Label" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 0.9)
-theme_override_font_sizes/font_size = 11
-text = "ООО «Брокилонская Чаща»  •  Цель: Кредит 'Эко-Берлога'"
-
-[node name="SpacerMiddle" type="Control" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SpeechBg" type="PanelContainer" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBox_DarkParchment")
-
-[node name="Margin" type="MarginContainer" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox/SpeechBg"]
+[node name="Margin" type="MarginContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar" unique_id=1655760724]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 4
 
-[node name="LabelMonsterSpeech" type="Label" parent="Margin/MainLayout/RightCol/MonsterPanel/ClientOverlay/VBox/SpeechBg/Margin"]
+[node name="VBoxHeader" type="VBoxContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin" unique_id=1046347416]
+layout_mode = 2
+
+[node name="Row1" type="HBoxContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin/VBoxHeader" unique_id=1926876100]
+layout_mode = 2
+
+[node name="LabelClientName" type="Label" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin/VBoxHeader/Row1" unique_id=1472741915]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.92, 0.82, 1)
-theme_override_font_sizes/font_size = 12
-text = "«Я триста лет сплю на мху. Зачем мне ваша плавающая ставка?!»"
-autowrap_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "Леший «Древний»"
 
-[node name="BottomRightRow" type="HBoxContainer" parent="Margin/MainLayout/RightCol"]
+[node name="Spacer" type="Control" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin/VBoxHeader/Row1" unique_id=333491605]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CallBadge" type="Label" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin/VBoxHeader/Row1" unique_id=690400723]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "📡 НА СВЯЗИ •"
+
+[node name="LabelCallTimer" type="Label" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin/VBoxHeader/Row1" unique_id=779536647]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "00:24"
+
+[node name="BtnSkipClient" type="Button" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin/VBoxHeader/Row1" unique_id=427673625]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 11
+text = "Сброс 📞"
+
+[node name="LabelClientMeta" type="Label" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/TopBar/Margin/VBoxHeader" unique_id=389892494]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 12
+text = "ООО «Брокилонская Чаща»  •  Цель: Кредит 'Эко-Берлога' (150 000 Orens)"
+
+[node name="SpacerMiddle" type="Control" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox" unique_id=2134135663]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 8
 
-[node name="BuffsPanel" type="PanelContainer" parent="Margin/MainLayout/RightCol/BottomRightRow"]
+[node name="SpeechBar" type="PanelContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox" unique_id=211945066]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_BarParchment")
+
+[node name="Margin" type="MarginContainer" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/SpeechBar" unique_id=1205940788]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="LabelMonsterSpeech" type="Label" parent="RootHBox/RightColMargin/RightCol/MonsterPanel/ClientOverlay/VBox/SpeechBar/Margin" unique_id=1320621224]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "Леший: «Я триста лет сплю на мху. Зачем мне ваша плавающая ставка?!»"
+autowrap_mode = 2
+
+[node name="BottomRightRow" type="HBoxContainer" parent="RootHBox/RightColMargin/RightCol" unique_id=1405755710]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="BuffsPanel" type="PanelContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow" unique_id=636160554]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBox_FrameWood")
 
-[node name="Margin" type="MarginContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/BuffsPanel"]
+[node name="Margin" type="MarginContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/BuffsPanel" unique_id=821606343]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 6
 
-[node name="VBox" type="VBoxContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/BuffsPanel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/BuffsPanel/Margin" unique_id=1424671175]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Margin/MainLayout/RightCol/BottomRightRow/BuffsPanel/Margin/VBox"]
+[node name="Title" type="Label" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/BuffsPanel/Margin/VBox" unique_id=528320079]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.8, 0.6, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 13
 text = "⚡ БАФФЫ И ЗНАКИ (5)"
 
-[node name="Scroll" type="ScrollContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/BuffsPanel/Margin/VBox"]
+[node name="Scroll" type="ScrollContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/BuffsPanel/Margin/VBox" unique_id=674051470]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="BuffsContainer" type="VBoxContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/BuffsPanel/Margin/VBox/Scroll"]
+[node name="BuffsContainer" type="VBoxContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/BuffsPanel/Margin/VBox/Scroll" unique_id=1264694174]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 3
 
-[node name="InventoryPanel" type="PanelContainer" parent="Margin/MainLayout/RightCol/BottomRightRow"]
+[node name="InventoryPanel" type="PanelContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow" unique_id=290053357]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBox_FrameWood")
 
-[node name="Margin" type="MarginContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/InventoryPanel"]
+[node name="Margin" type="MarginContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/InventoryPanel" unique_id=660622708]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 6
 
-[node name="VBox" type="VBoxContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/InventoryPanel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/InventoryPanel/Margin" unique_id=1664628760]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Margin/MainLayout/RightCol/BottomRightRow/InventoryPanel/Margin/VBox"]
+[node name="Title" type="Label" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/InventoryPanel/Margin/VBox" unique_id=1265883911]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.8, 0.6, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.75, 0.45, 1)
+theme_override_font_sizes/font_size = 13
 text = "🎒 ИНВЕНТАРЬ (6)"
 
-[node name="Scroll" type="ScrollContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/InventoryPanel/Margin/VBox"]
+[node name="Scroll" type="ScrollContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/InventoryPanel/Margin/VBox" unique_id=383503514]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="InventoryGrid" type="GridContainer" parent="Margin/MainLayout/RightCol/BottomRightRow/InventoryPanel/Margin/VBox/Scroll"]
+[node name="InventoryGrid" type="GridContainer" parent="RootHBox/RightColMargin/RightCol/BottomRightRow/InventoryPanel/Margin/VBox/Scroll" unique_id=1783487564]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
