@@ -1,0 +1,13 @@
+{
+  "args_summary": "write_file(path=res://scripts/main_call_screen.gd)",
+  "files": [
+    {
+      "backup": "res://addons/godot_mcp/cache/undo/entry_000011/files/scripts/main_call_screen.gd",
+      "kind": "snapshot",
+      "path": "res://scripts/main_call_screen.gd"
+    }
+  ],
+  "id": "000011",
+  "timestamp": 1794334860.0,
+  "tool": "write_file"
+}

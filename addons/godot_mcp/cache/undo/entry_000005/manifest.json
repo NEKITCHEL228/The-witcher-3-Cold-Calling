@@ -1,0 +1,12 @@
+{
+  "args_summary": "write_file(path=res://scenes/main_call_screen.tscn)",
+  "files": [
+    {
+      "kind": "created",
+      "path": "res://scenes/main_call_screen.tscn"
+    }
+  ],
+  "id": "000005",
+  "timestamp": 1794329556.0,
+  "tool": "write_file"
+}

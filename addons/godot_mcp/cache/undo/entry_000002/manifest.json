@@ -1,0 +1,13 @@
+{
+  "args_summary": "create_folder(path=res://scenes)",
+  "files": [
+    {
+      "is_dir": true,
+      "kind": "created",
+      "path": "res://scenes"
+    }
+  ],
+  "id": "000002",
+  "timestamp": 1794329445.0,
+  "tool": "create_folder"
+}
