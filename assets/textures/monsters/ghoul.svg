@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <rect width="320" height="320" rx="16" fill="#1b1c1d" stroke="#383028" stroke-width="3"/>
+  <!-- Hunchback & Shoulders -->
+  <path d="M40,320 C60,220 100,200 160,220 C220,200 260,220 280,320 Z" fill="#2d2b27" stroke="#4a4237" stroke-width="3"/>
+  <!-- Exposed Ribs / Bone Scavenger Collar -->
+  <path d="M120,270 L140,290 L160,265 L180,290 L200,270" stroke="#d5c8b0" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Thick Feral Neck -->
+  <rect x="135" y="170" width="50" height="60" fill="#474136"/>
+  <!-- Head (Feral & Asymmetric) -->
+  <ellipse cx="160" cy="145" rx="58" ry="48" fill="#524a3e" stroke="#332d24" stroke-width="3"/>
+  <!-- Ears (Ragged & Torn) -->
+  <polygon points="105,130 75,100 115,115" fill="#433c30" stroke="#2a241b" stroke-width="2"/>
+  <polygon points="215,130 245,100 205,115" fill="#433c30" stroke="#2a241b" stroke-width="2"/>
+  <!-- Glowing Bloodshot Yellow Eyes -->
+  <ellipse cx="138" cy="132" rx="9" ry="6" fill="#ffd000"/>
+  <ellipse cx="182" cy="132" rx="9" ry="6" fill="#ffd000"/>
+  <circle cx="138" cy="132" r="3" fill="#990000"/>
+  <circle cx="182" cy="132" r="3" fill="#990000"/>
+  <!-- Wrinkled Snout & Nostrils -->
+  <ellipse cx="160" cy="155" rx="14" ry="8" fill="#302a22"/>
+  <circle cx="155" cy="155" r="2.5" fill="#15120e"/>
+  <circle cx="165" cy="155" r="2.5" fill="#15120e"/>
+  <!-- Wide Tooth-Filled Snarl -->
+  <path d="M130,172 Q160,195 190,172" stroke="#221b14" stroke-width="4" fill="#1a140f"/>
+  <polygon points="138,172 142,185 146,172" fill="#ede0c8"/>
+  <polygon points="152,172 156,188 160,172" fill="#ede0c8"/>
+  <polygon points="166,172 170,186 174,172" fill="#ede0c8"/>
+  <polygon points="178,172 182,182 186,172" fill="#ede0c8"/>
+  <polygon points="144,188 148,176 152,188" fill="#ede0c8"/>
+  <polygon points="160,190 164,176 168,190" fill="#ede0c8"/>
+  <!-- Cemetery dirt patches -->
+  <circle cx="120" cy="150" r="5" fill="#2d2218" opacity="0.6"/>
+  <circle cx="195" cy="140" r="7" fill="#2d2218" opacity="0.6"/>
+</svg>

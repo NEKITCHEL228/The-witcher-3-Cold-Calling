@@ -26,7 +26,7 @@ side_effect_description = "Доверие выросло на +30%, но сум�
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_07_double_edge"
-option_name = "Двойной договор"
+option_name = "Предложить двойной тариф на выбор"
 text = "У меня два бланка: один с повышенным кредитным лимитом, но драконовской ставкой, второй — со скидкой, но сумма скромнее."
 approach_tag = "insider_deal"
 domain_category = "Торг"

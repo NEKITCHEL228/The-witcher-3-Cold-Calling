@@ -117,6 +117,7 @@ func _prepare_desk_for_call() -> void:
 	monster_speech_label.text = "..."
 	geralt_speech_label.text = "«...»"
 	loan_bonus_label.text = "+0 $"
+	monster_portrait.texture = null
 	_clear_traits()
 	_reset_effects_panel()
 
@@ -129,6 +130,8 @@ func _on_dial_pressed() -> void:
 func _on_call_started(monster: MonsterData) -> void:
 	_refresh_player_stats()
 	monster_name_label.text = monster.monster_name
+	if monster.portrait:
+		monster_portrait.texture = monster.portrait
 	geralt_speech_label.text = "«Добрый день, меня зовут Геральт. Звоню из отдела кредитования...»"
 	if not monster.opening_lines.is_empty():
 		monster_speech_label.text = monster.opening_lines.pick_random()
@@ -173,22 +176,30 @@ func _on_dialogue_option_hovered(option: DialogueOption) -> void:
 		_reset_effects_panel()
 		return
 
+	var display_title: String = option.option_name if not option.option_name.is_empty() else option.text
 	effect_approach_label.text = "ДЕЙСТВИЕ: %s [%s]" % [
-		option.option_name,
+		display_title,
 		option.domain_category.to_upper()
 	]
 	
-	var lines: Array[String] = []
-	lines.append("Возможные исходы:")
-	var total_w: float = 0.0
-	for out in option.possible_outcomes:
-		total_w += out.base_weight
-	if total_w <= 0.0:
-		total_w = 1.0
+	var probs: Array[Dictionary] = CallResolver.get_outcome_probabilities(
+		option,
+		GameManager.current_monster,
+		GameManager.player_luck,
+		GameManager.next_turn_item_multiplier
+	)
 
-	for out in option.possible_outcomes:
-		var pct := int(round(out.base_weight / total_w * 100.0))
-		lines.append(" • %d%%: %s (%s)" % [pct, out.outcome_title, out.side_effect_description])
+	var lines: Array[String] = []
+	lines.append("Что конкретно произойдет:")
+
+	for p in probs:
+		var out: DialogueOutcome = p["outcome"]
+		var eff_pct: int = p["effective_pct"]
+		var mod_str: String = p["mod_str"]
+		var concrete_effect: String = p["concrete_text"]
+		lines.append(" • %d%%%s: %s" % [eff_pct, mod_str, concrete_effect])
+		if not out.side_effect_description.is_empty():
+			lines.append("   └ Побочный эффект: %s" % out.side_effect_description)
 
 	effect_desc_label.text = "\n".join(lines)
 
@@ -197,7 +208,7 @@ func _on_dialogue_option_hovered(option: DialogueOption) -> void:
 		var has_synergy: bool = false
 		for m_trait in GameManager.current_monster.traits:
 			if m_trait and option.approach_tag in m_trait.weak_against_approaches:
-				effect_trait_synergy_label.text = "★ СЛАБОСТЬ КЛИЕНТА к [%s] (+50%% к шансу успеха!)" % m_trait.trait_name
+				effect_trait_synergy_label.text = "★ СЛАБОСТЬ КЛИЕНТА к [%s] (+50%% шанс успеха)" % m_trait.trait_name
 				effect_trait_synergy_label.modulate = Color(0.3, 1.0, 0.4)
 				has_synergy = true
 				break

@@ -15,7 +15,7 @@ side_effect_description = "Гарантированный безопасный �
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_06_safe_script"
-option_name = "Корпоративный скрипт"
+option_name = "Зачитать регламент о кредитной истории"
 text = "Согласно регламенту компании «Орен-Займ», клиентам вашей категории положен бесплатный аудит кредитной истории."
 approach_tag = "bureaucracy"
 domain_category = "Доверие"

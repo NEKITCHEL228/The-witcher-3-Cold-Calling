@@ -47,3 +47,68 @@ class_name DialogueOutcome extends Resource
 
 ## Side effect text (Jam theme: Побочный эффект / Палка о двух концах)
 @export var side_effect_description: String = ""
+
+## Returns exact, concrete mechanical description of what this outcome does
+func get_concrete_effect_text() -> String:
+	if is_instant_success:
+		return "Мгновенное согласие на кредит (100% закрытие сделки)!"
+	if is_instant_hangup:
+		return "Клиент в ярости бросает трубку (провал)!"
+
+	var parts: Array[String] = []
+
+	# 1. Шкала доверия
+	if is_half_scale_shift:
+		if persuasion_delta >= 0.0:
+			parts.append("Шкала доверия увеличится на +50% от шкалы")
+		else:
+			parts.append("Шкала доверия уменьшится на -50% от шкалы")
+	elif persuasion_delta != 0.0:
+		if persuasion_delta > 0.0:
+			parts.append("Шкала доверия увеличится на +%d%%" % int(persuasion_delta * 100))
+		else:
+			parts.append("Шкала доверия уменьшится на -%d%%" % int(abs(persuasion_delta) * 100))
+
+	# 2. Кредит / Деньги
+	if loan_amount_multiplier != 1.0:
+		if loan_amount_multiplier > 1.0:
+			parts.append("Сумма кредита увеличится на +%d%%" % int(round((loan_amount_multiplier - 1.0) * 100)))
+		else:
+			parts.append("Сумма кредита уменьшится на -%d%%" % int(round((1.0 - loan_amount_multiplier) * 100)))
+	if flat_money_delta != 0:
+		parts.append("%+d орен к займу" % flat_money_delta)
+
+	# 3. Ходы звонка
+	if turns_delta != 0:
+		if turns_delta > 0:
+			parts.append("+%d доп. хода к звонку" % turns_delta)
+		else:
+			parts.append("-%d ход звонка" % abs(turns_delta))
+
+	# 4. Инвентарь
+	if duplicate_random_item:
+		parts.append("Случайный предмет из инвентаря дублируется")
+	if remove_random_item:
+		parts.append("Случайный предмет из инвентаря теряется")
+	if next_turn_item_multiplier != 1.0:
+		if next_turn_item_multiplier > 1.0:
+			parts.append("Все предметы усилятся на +%d%% на следующем ходу" % int((next_turn_item_multiplier - 1.0) * 100))
+		else:
+			parts.append("Все предметы ослабнут на -%d%% на следующем ходу" % int((1.0 - next_turn_item_multiplier) * 100))
+
+	# 5. Квота и звонки
+	if quota_percent_delta != 0.0:
+		if quota_percent_delta < 0.0:
+			parts.append("Дневная квота снизится на %d%%" % int(abs(quota_percent_delta) * 100))
+		else:
+			parts.append("Дневная квота вырастет на +%d%%" % int(quota_percent_delta * 100))
+	if day_calls_delta != 0:
+		if day_calls_delta > 0:
+			parts.append("+%d доп. звонок на сегодня" % day_calls_delta)
+		else:
+			parts.append("-%d звонок на сегодня" % abs(day_calls_delta))
+
+	if parts.is_empty():
+		return "Никаких изменений (статус-кво)"
+
+	return ", ".join(parts)

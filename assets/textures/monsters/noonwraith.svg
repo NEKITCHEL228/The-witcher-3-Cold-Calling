@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <rect width="320" height="320" rx="16" fill="#1b1c18" stroke="#484428" stroke-width="3"/>
+  <!-- Blinding Midday Sun Aura -->
+  <circle cx="160" cy="140" r="105" fill="#f59e0b" opacity="0.15"/>
+  <circle cx="160" cy="140" r="85" fill="#fbbf24" opacity="0.25"/>
+  <!-- Floating Tattered Veil & Dress -->
+  <path d="M70,320 Q110,210 160,210 Q210,210 250,320 Z" fill="#423e35" stroke="#78716c" stroke-width="2"/>
+  <path d="M110,320 Q160,250 210,320" fill="none" stroke="#d6d3d1" stroke-width="2" stroke-dasharray="6,4"/>
+  <!-- Spectral Emaciated Neck -->
+  <rect x="148" y="165" width="24" height="50" fill="#a8a29e"/>
+  <!-- Ghostly Face -->
+  <ellipse cx="160" cy="135" rx="42" ry="52" fill="#d6d3d1" stroke="#78716c" stroke-width="2"/>
+  <!-- Sunken Hollow Cheeks -->
+  <path d="M130,140 Q145,155 136,170" fill="none" stroke="#78716c" stroke-width="2"/>
+  <path d="M190,140 Q175,155 184,170" fill="none" stroke="#78716c" stroke-width="2"/>
+  <!-- Vacant Glowing Eyes (Solar Glare) -->
+  <ellipse cx="145" cy="128" rx="8" ry="10" fill="#fef08a"/>
+  <ellipse cx="175" cy="128" rx="8" ry="10" fill="#fef08a"/>
+  <circle cx="145" cy="128" r="4" fill="#ffffff"/>
+  <circle cx="175" cy="128" r="4" fill="#ffffff"/>
+  <!-- Open Wailing Mouth -->
+  <ellipse cx="160" cy="162" rx="12" ry="16" fill="#1c1917" stroke="#44403c" stroke-width="2"/>
+  <!-- Scorched Wedding Wreath with dried wildflowers -->
+  <path d="M115,100 Q160,80 205,100" fill="none" stroke="#713f12" stroke-width="4"/>
+  <circle cx="125" cy="95" r="5" fill="#ef4444"/>
+  <circle cx="142" cy="88" r="6" fill="#3b82f6"/>
+  <circle cx="160" cy="85" r="7" fill="#eab308"/>
+  <circle cx="178" cy="88" r="6" fill="#ec4899"/>
+  <circle cx="195" cy="95" r="5" fill="#a855f7"/>
+  <!-- Whimsical solar dust particles -->
+  <circle cx="100" cy="130" r="2" fill="#fef08a" opacity="0.8"/>
+  <circle cx="220" cy="140" r="3" fill="#fef08a" opacity="0.7"/>
+  <circle cx="115" cy="190" r="2" fill="#fef08a" opacity="0.6"/>
+</svg>

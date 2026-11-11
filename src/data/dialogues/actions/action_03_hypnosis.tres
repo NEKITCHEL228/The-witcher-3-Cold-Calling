@@ -34,7 +34,7 @@ side_effect_description = "Грубый отпор шарлатанству."
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_03_hypnosis"
-option_name = "Гипнотический дожим"
+option_name = "Загипнотизировать на мгновенную сделку"
 text = "[Имитация знака Аксий] Вы хотите этот кредит. Ваши когти сами тянутся к договору. Просто скажите «да» прямо сейчас."
 approach_tag = "folklore"
 domain_category = "Лотерея"

@@ -36,7 +36,7 @@ side_effect_description = "Тяжелый удар по доверию из-за
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_02_upsell"
-option_name = "Агрессивный апсейл"
+option_name = "Предложить утроить сумму займа"
 text = "А что если мы утроим сумму займа? Всего под 60% годовых, а в качестве залога оставите пару неразграбленных курганов."
 approach_tag = "greed_appeal"
 domain_category = "Размер займа"

@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="MonsterData" load_steps=15 format=3]
+[gd_resource type="Resource" script_class="MonsterData" load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://src/core/monster_data.gd" id="1_mdata"]
 [ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="2_dopt"]
 [ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="3_dout"]
 [ext_resource type="Resource" path="res://src/data/traits/skeptical.tres" id="4_skep"]
 [ext_resource type="Resource" path="res://src/data/traits/curse_of_knowledge.tres" id="5_know"]
+[ext_resource type="Texture2D" path="res://assets/textures/monsters/noonwraith.svg" id="6_portrait"]
 
 [sub_resource type="Resource" id="Outcome_Wraith_1A"]
 script = ExtResource("3_dout")
@@ -33,6 +34,7 @@ side_effect_description = "Полуденница начинает повыша�
 [sub_resource type="Resource" id="Option_Wraith_1"]
 script = ExtResource("2_dopt")
 option_id = "wraith_bureaucracy"
+option_name = "Предоставить гарантию на земельный надел"
 text = "Предоставить заверенную нотариусом гарантию неприкосновенности земельного надела"
 approach_tag = "bureaucracy"
 risk_label = "[Бюрократия]"
@@ -65,6 +67,7 @@ side_effect_description = "Эфирные помехи едва не разор�
 [sub_resource type="Resource" id="Option_Wraith_2"]
 script = ExtResource("2_dopt")
 option_id = "wraith_folklore"
+option_name = "Посочувствовать трагедии со свадебным венком"
 text = "Сослаться на историю ее несчастной любви и предложить рефинансирование свадебного венка"
 approach_tag = "folklore"
 risk_label = "[Учитесь у своих врагов]"
@@ -97,6 +100,7 @@ side_effect_description = "Клиентка теряет интерес к ко�
 [sub_resource type="Resource" id="Option_Wraith_3"]
 script = ExtResource("2_dopt")
 option_id = "wraith_insider"
+option_name = "Предложить график платежей в зените солнца"
 text = "Предложить индивидуальный график платежей с привязкой к солнечному зениту"
 approach_tag = "insider_deal"
 risk_label = "[Эксклюзив]"
@@ -107,6 +111,7 @@ script = ExtResource("1_mdata")
 id = "noonwraith"
 monster_name = "Полуденница с Белосадова поля"
 description = "Мстительный призрак с нерешенными вопросами по приватизации земельного участка после неудачной свадьбы."
+portrait = ExtResource("6_portrait")
 base_loan_amount = 20000
 difficulty = 0.45
 traits = [ExtResource("4_skep"), ExtResource("5_know")]

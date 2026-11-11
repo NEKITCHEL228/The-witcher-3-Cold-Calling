@@ -87,10 +87,8 @@ func _create_option_button(index: int, option: DialogueOption) -> Button:
 	text_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hbox.add_child(text_lbl)
 
-	# Calculate odds for the right side: e.g. "🟢 50% ↑ | 🔴 50% ↓"
-	var odds_str := option.get_short_odds_string()
-	if odds_str.is_empty():
-		odds_str = _calculate_odds_string(option)
+	# Calculate odds for the right side: e.g. "67% (+17%) ↑ | 33% (-17%) ↓"
+	var odds_str := _format_button_odds(option)
 	var odds_lbl := Label.new()
 	odds_lbl.text = odds_str
 	odds_lbl.add_theme_color_override("font_color", Color(0.9, 0.85, 0.4))
@@ -117,6 +115,39 @@ func _create_locked_slot_button(index: int) -> PanelContainer:
 	panel.add_child(lbl)
 
 	return panel
+
+func _format_button_odds(option: DialogueOption) -> String:
+	var monster: MonsterData = GameManager.current_monster
+	var probs: Array[Dictionary] = CallResolver.get_outcome_probabilities(
+		option,
+		monster,
+		GameManager.player_luck,
+		GameManager.next_turn_item_multiplier
+	)
+	if probs.is_empty():
+		return _calculate_odds_string(option)
+
+	var badges: Array[String] = []
+	for p in probs:
+		var out: DialogueOutcome = p["outcome"]
+		var eff_pct: int = p["effective_pct"]
+		var mod_str: String = p["mod_str"]
+		
+		var icon: String = "↑"
+		if out.is_instant_success:
+			icon = "★"
+		elif out.is_instant_hangup:
+			icon = "✕"
+		elif out.persuasion_delta < 0.0:
+			icon = "↓"
+		elif out.loan_amount_multiplier > 1.0 or out.flat_money_delta > 0:
+			icon = "💰"
+		elif out.turns_delta != 0:
+			icon = "⏱"
+
+		badges.append("%d%%%s %s" % [eff_pct, mod_str, icon])
+
+	return " | ".join(badges)
 
 func _calculate_odds_string(option: DialogueOption) -> String:
 	var pos_weight: float = 0.0

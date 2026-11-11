@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="MonsterData" load_steps=15 format=3]
+[gd_resource type="Resource" script_class="MonsterData" load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://src/core/monster_data.gd" id="1_mdata"]
 [ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="2_dopt"]
 [ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="3_dout"]
 [ext_resource type="Resource" path="res://src/data/traits/greedy.tres" id="4_greedy"]
 [ext_resource type="Resource" path="res://src/data/traits/aggressive.tres" id="5_aggr"]
+[ext_resource type="Texture2D" path="res://assets/textures/monsters/drowner.svg" id="6_portrait"]
 
 [sub_resource type="Resource" id="Outcome_Drowner_1A"]
 script = ExtResource("3_dout")
@@ -33,6 +34,7 @@ side_effect_description = "Из трубки капает болотная жи�
 [sub_resource type="Resource" id="Option_Drowner_1"]
 script = ExtResource("2_dopt")
 option_id = "drowner_swamp_invest"
+option_name = "Предложить инвестиции в осушение болот"
 text = "Предложить инвестиционный займ под развитие прибрежной инфраструктуры болот"
 approach_tag = "greed_appeal"
 risk_label = "[Выгода]"
@@ -65,6 +67,7 @@ side_effect_description = "Клиент заподозрил неискренн�
 [sub_resource type="Resource" id="Option_Drowner_2"]
 script = ExtResource("2_dopt")
 option_id = "drowner_flattery"
+option_name = "Польстить непревзойденной грации пловца"
 text = "Похвалить непревзойденную грацию и прыгучесть среди всех обитателей Понтара"
 approach_tag = "flattery"
 risk_label = "[Лесть]"
@@ -97,6 +100,7 @@ side_effect_description = "Утопец нырнул в илистое дно в
 [sub_resource type="Resource" id="Option_Drowner_3"]
 script = ExtResource("2_dopt")
 option_id = "drowner_urgency"
+option_name = "Предложить страховку от ведьмаков в подарок"
 text = "Поставить ультиматум: акция 'Страховка от ведьмаков в подарок' истекает через 5 минут"
 approach_tag = "urgency"
 risk_label = "[Палка о двух концах]"
@@ -107,6 +111,7 @@ script = ExtResource("1_mdata")
 id = "drowner"
 monster_name = "Утопец из дельты Понтара"
 description = "Амфибийный гуманоид. Мечтает об открытии подводного спа-салона и боится осенних заморозков."
+portrait = ExtResource("6_portrait")
 base_loan_amount = 10000
 difficulty = 0.2
 traits = [ExtResource("4_greedy"), ExtResource("5_aggr")]

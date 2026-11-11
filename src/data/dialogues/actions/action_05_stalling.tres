@@ -26,7 +26,7 @@ side_effect_description = "Клиент раздражен пустой болт
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_05_stalling"
-option_name = "Заговорить зубы"
+option_name = "Заговорить зубы байкой о налогах"
 text = "Кстати, о погоде на болотах... Вы знали, что реданские таможенники собираются ввести налог на стоячую воду?"
 approach_tag = "flattery"
 domain_category = "Ходы звонка"

@@ -38,7 +38,7 @@ side_effect_description = "Начальство накинуло +10% к пла�
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_10_accounting_call"
-option_name = "Звонок в бухгалтерию"
+option_name = "Связаться с казначеем насчет квоты"
 text = "Оставайтесь на линии, я связываюсь со старшим казначеем Банка Вивальди для утверждения спецусловий."
 approach_tag = "insider_deal"
 domain_category = "Квота"

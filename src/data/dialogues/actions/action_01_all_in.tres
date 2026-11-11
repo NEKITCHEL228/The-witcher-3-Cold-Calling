@@ -26,7 +26,7 @@ side_effect_description = "Провал давления отбрасывает 
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_01_all_in"
-option_name = "Пан или пропал"
+option_name = "Пойти ва-банк на всё доверие"
 text = "Давайте без лишних прелюдий: вы видите выгоду, я вижу клиента. Либо бьем по рукам прямо сейчас, либо расходимся."
 approach_tag = "intimidation"
 domain_category = "Доверие"

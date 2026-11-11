@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="MonsterData" load_steps=15 format=3]
+[gd_resource type="Resource" script_class="MonsterData" load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://src/core/monster_data.gd" id="1_mdata"]
 [ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="2_dopt"]
 [ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="3_dout"]
 [ext_resource type="Resource" path="res://src/data/traits/greedy.tres" id="4_greedy"]
 [ext_resource type="Resource" path="res://src/data/traits/aggressive.tres" id="5_aggr"]
+[ext_resource type="Texture2D" path="res://assets/textures/monsters/ghoul.svg" id="6_portrait"]
 
 [sub_resource type="Resource" id="Outcome_Ghoul_1A"]
 script = ExtResource("3_dout")
@@ -33,6 +34,7 @@ side_effect_description = "Гуль грозно сопит в трубку."
 [sub_resource type="Resource" id="Option_Ghoul_1"]
 script = ExtResource("2_dopt")
 option_id = "ghoul_crypt"
+option_name = "Предложить займ под залог склепа"
 text = "Предложить займ под залог неразграбленного склепа"
 approach_tag = "greed_appeal"
 risk_label = "[Выгода]"
@@ -65,6 +67,7 @@ side_effect_description = "Раздражение гуля опасно нара
 [sub_resource type="Resource" id="Option_Ghoul_2"]
 script = ExtResource("2_dopt")
 option_id = "ghoul_bureaucracy"
+option_name = "Зачитать параграф о правах падальщиков"
 text = "Зачитать параграф 4.1 о защите прав падальщиков в Велене"
 approach_tag = "bureaucracy"
 risk_label = "[Палка о двух концах]"
@@ -97,6 +100,7 @@ side_effect_description = "Гуль плюнул в телефонную тру�
 [sub_resource type="Resource" id="Option_Ghoul_3"]
 script = ExtResource("2_dopt")
 option_id = "ghoul_urgency"
+option_name = "Предупредить о рейде археологов"
 text = "Предупредить о скором рейде реданских археологов: деньги нужны сейчас"
 approach_tag = "urgency"
 risk_label = "[Давление]"
@@ -129,6 +133,7 @@ side_effect_description = "Гуль уязвлен гастрономическ�
 [sub_resource type="Resource" id="Option_Ghoul_4"]
 script = ExtResource("2_dopt")
 option_id = "ghoul_folklore"
+option_name = "Предложить кредит на дезинфекцию могильников"
 text = "Проявить знание привычек: предложить оптовый кредит на дезинфекцию могильников"
 approach_tag = "folklore"
 risk_label = "[Проклятие знаний]"
@@ -139,6 +144,7 @@ script = ExtResource("1_mdata")
 id = "ghoul"
 monster_name = "Гуль из Оксенфуртских склепов"
 description = "Падальщик среднего звена. Жалуется на дефицит погребений и кризис в сфере похоронных услуг."
+portrait = ExtResource("6_portrait")
 base_loan_amount = 12000
 difficulty = 0.25
 traits = [ExtResource("4_greedy"), ExtResource("5_aggr")]

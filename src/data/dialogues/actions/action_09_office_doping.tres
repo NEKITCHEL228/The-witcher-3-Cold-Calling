@@ -26,7 +26,7 @@ side_effect_description = "Эффекты предметов и удачи ос�
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_09_office_doping"
-option_name = "Офисный допинг"
+option_name = "Сделать глоток кофе и свериться с записями"
 text = "Секунду, сверюсь с нашими специальными регламентами и сделаю глоток крепкого кофе..."
 approach_tag = "bureaucracy"
 domain_category = "Инвентарь"

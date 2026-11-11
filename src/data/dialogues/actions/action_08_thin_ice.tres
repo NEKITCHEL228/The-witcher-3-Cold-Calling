@@ -26,7 +26,7 @@ side_effect_description = "Катастрофическая оговорка! Д
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_08_thin_ice"
-option_name = "Тонкий лёд"
+option_name = "Рассказать рискованный новиградский анекдот"
 text = "Знаете анекдот про гуля, утопца и кредитного инспектора?.."
 approach_tag = "folklore"
 domain_category = "Риск"

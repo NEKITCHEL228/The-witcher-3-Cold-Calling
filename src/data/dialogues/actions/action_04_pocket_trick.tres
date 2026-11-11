@@ -35,7 +35,7 @@ side_effect_description = "От нервов случайный предмет �
 [resource]
 script = ExtResource("1_opt")
 option_id = "action_04_pocket_trick"
-option_name = "Карманный трюк"
+option_name = "Пошарить в карманах в поисках шпаргалки"
 text = "Погодите секунду... У меня тут в кармане завалялась полезная вещица для нашего разговора."
 approach_tag = "flattery"
 domain_category = "Инвентарь"
