@@ -32,3 +32,4 @@ approach_tag = "flattery"
 domain_category = "Ходы звонка"
 risk_label = "[Время]"
 possible_outcomes = [SubResource("Outcome_05_MoreTurns"), SubResource("Outcome_05_Boredom")]
+

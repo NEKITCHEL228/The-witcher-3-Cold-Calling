@@ -21,3 +21,4 @@ approach_tag = "bureaucracy"
 domain_category = "Доверие"
 risk_label = "[Безопасно]"
 possible_outcomes = [SubResource("Outcome_06_Guaranteed")]
+

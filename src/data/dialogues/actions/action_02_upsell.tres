@@ -42,3 +42,4 @@ approach_tag = "greed_appeal"
 domain_category = "Размер займа"
 risk_label = "[Высокий риск]"
 possible_outcomes = [SubResource("Outcome_02_CreditBoost"), SubResource("Outcome_02_Hesitation"), SubResource("Outcome_02_Outrage")]
+

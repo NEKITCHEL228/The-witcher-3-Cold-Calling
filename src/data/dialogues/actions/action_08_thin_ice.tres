@@ -32,3 +32,4 @@ approach_tag = "folklore"
 domain_category = "Риск"
 risk_label = "[Русская рулетка]"
 possible_outcomes = [SubResource("Outcome_08_Safe"), SubResource("Outcome_08_Disaster")]
+

@@ -32,3 +32,4 @@ approach_tag = "bureaucracy"
 domain_category = "Инвентарь"
 risk_label = "[Эффекты предметов]"
 possible_outcomes = [SubResource("Outcome_09_Boost"), SubResource("Outcome_09_Crash")]
+

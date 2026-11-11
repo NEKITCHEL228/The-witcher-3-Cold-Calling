@@ -32,3 +32,4 @@ approach_tag = "intimidation"
 domain_category = "Доверие"
 risk_label = "[Ва-банк]"
 possible_outcomes = [SubResource("Outcome_01_Success"), SubResource("Outcome_01_Fail")]
+

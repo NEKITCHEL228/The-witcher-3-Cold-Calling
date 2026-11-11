@@ -44,3 +44,4 @@ approach_tag = "insider_deal"
 domain_category = "Квота"
 risk_label = "[Макро-план]"
 possible_outcomes = [SubResource("Outcome_10_Discount"), SubResource("Outcome_10_Compromise"), SubResource("Outcome_10_Overtime")]
+

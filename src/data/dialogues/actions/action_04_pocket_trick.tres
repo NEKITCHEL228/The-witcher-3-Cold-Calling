@@ -41,3 +41,4 @@ approach_tag = "flattery"
 domain_category = "Инвентарь"
 risk_label = "[Риск вещами]"
 possible_outcomes = [SubResource("Outcome_04_Duplicate"), SubResource("Outcome_04_Nothing"), SubResource("Outcome_04_Lose")]
+

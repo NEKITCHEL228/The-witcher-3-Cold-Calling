@@ -40,3 +40,4 @@ approach_tag = "folklore"
 domain_category = "Лотерея"
 risk_label = "[Критический риск]"
 possible_outcomes = [SubResource("Outcome_03_InstantWin"), SubResource("Outcome_03_Awkward"), SubResource("Outcome_03_Repelled")]
+

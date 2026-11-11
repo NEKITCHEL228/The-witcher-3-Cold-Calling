@@ -13,6 +13,7 @@ extends Control
 @onready var loan_bonus_label: Label = $TopContainer/GeraltPanel/GeraltHeader/CreditBox/CreditValue
 @onready var day_info_label: Label = $TopContainer/GeraltPanel/GeraltHeader/DayInfoLabel
 @onready var dial_button: Button = $TopContainer/GeraltPanel/DialButton
+@onready var geralt_speech_label: Label = $TopContainer/GeraltPanel/SpeechBubble/SpeechLabel
 
 # --- Top Center (Persuasion Meter) ---
 @onready var persuasion_meter: PersuasionMeter = $TopContainer/PersuasionMeter
@@ -40,6 +41,7 @@ func _ready() -> void:
 	Events.call_started.connect(_on_call_started)
 	Events.call_finished.connect(_on_call_finished)
 	Events.call_turns_changed.connect(_on_call_turns_changed)
+	Events.dialogue_chosen.connect(_on_dialogue_chosen)
 	Events.outcome_resolved.connect(_on_outcome_resolved)
 	Events.player_balance_changed.connect(_on_balance_changed)
 	Events.quota_updated.connect(_on_quota_updated)
@@ -53,6 +55,10 @@ func _ready() -> void:
 
 	if GameManager.state == GameManager.GameState.START_DAY:
 		_prepare_desk_for_call()
+
+func _on_dialogue_chosen(option: DialogueOption) -> void:
+	if option:
+		geralt_speech_label.text = "«" + option.text + "»"
 
 func _on_call_turns_changed(_turns_left: int, _delta: int) -> void:
 	_refresh_player_stats()
@@ -109,6 +115,7 @@ func _prepare_desk_for_call() -> void:
 	dial_button.text = "Набрать клиента (%d осталось)" % GameManager.calls_remaining_today
 	monster_name_label.text = "Клиент: —"
 	monster_speech_label.text = "..."
+	geralt_speech_label.text = "«...»"
 	loan_bonus_label.text = "+0 $"
 	_clear_traits()
 	_reset_effects_panel()
@@ -116,11 +123,13 @@ func _prepare_desk_for_call() -> void:
 func _on_dial_pressed() -> void:
 	dial_button.visible = false
 	monster_speech_label.text = "*Гудки в телефонной трубке... соединение...*"
+	geralt_speech_label.text = "«Набираю номер...»"
 	GameManager.start_next_call()
 
 func _on_call_started(monster: MonsterData) -> void:
 	_refresh_player_stats()
 	monster_name_label.text = monster.monster_name
+	geralt_speech_label.text = "«Добрый день, меня зовут Геральт. Звоню из отдела кредитования...»"
 	if not monster.opening_lines.is_empty():
 		monster_speech_label.text = monster.opening_lines.pick_random()
 	else:
@@ -170,7 +179,6 @@ func _on_dialogue_option_hovered(option: DialogueOption) -> void:
 	]
 	
 	var lines: Array[String] = []
-	lines.append("Реплика: «%s»" % option.text)
 	lines.append("Возможные исходы:")
 	var total_w: float = 0.0
 	for out in option.possible_outcomes:

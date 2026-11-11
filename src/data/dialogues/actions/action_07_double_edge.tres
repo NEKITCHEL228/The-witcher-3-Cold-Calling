@@ -32,3 +32,4 @@ approach_tag = "insider_deal"
 domain_category = "Торг"
 risk_label = "[Палка о двух концах]"
 possible_outcomes = [SubResource("Outcome_07_HighSum"), SubResource("Outcome_07_Discount")]
+
