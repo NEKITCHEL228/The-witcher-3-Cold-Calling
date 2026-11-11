@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MonsterTrait" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/monster_trait.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = "skeptical"
+trait_name = "Подозрительность"
+description = "Внимательно изучает каждый мелкий шрифт. Устойчив к лести, но уважает строгие лицензии Темерии."
+tag = "skeptical"
+affinity_multiplier = 1.3
+weak_against_approaches = PackedStringArray("bureaucracy", "guarantee")
+strong_against_approaches = PackedStringArray("greed_appeal", "flattery")
+

@@ -1,0 +1,126 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://src/core/monster_data.gd" id="1_mdata"]
+[ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="2_dopt"]
+[ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="3_dout"]
+[ext_resource type="Resource" path="res://src/data/traits/skeptical.tres" id="4_skep"]
+[ext_resource type="Resource" path="res://src/data/traits/curse_of_knowledge.tres" id="5_know"]
+
+[sub_resource type="Resource" id="Outcome_Wraith_1A"]
+script = ExtResource("3_dout")
+outcome_title = "Юридическая чистота"
+monster_reaction_text = "Печать с гербом короля Фольтеста? Что ж, это меняет дело. Я ценю строгие формуляры."
+persuasion_delta = 0.4
+loan_amount_multiplier = 1.1
+flat_money_delta = 1500
+base_weight = 65.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Призрак удовлетворенно кружит по пшеничному полю."
+
+[sub_resource type="Resource" id="Outcome_Wraith_1B"]
+script = ExtResource("3_dout")
+outcome_title = "Юридическая претензия"
+monster_reaction_text = "В третьем подпункте ошибка в дате коронации! Вы пытаетесь обмануть дух умершей?!"
+persuasion_delta = -0.25
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 35.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Полуденница начинает повышать голос до ультразвука."
+
+[sub_resource type="Resource" id="Option_Wraith_1"]
+script = ExtResource("2_dopt")
+option_id = "wraith_bureaucracy"
+text = "Предоставить заверенную нотариусом гарантию неприкосновенности земельного надела"
+approach_tag = "bureaucracy"
+risk_label = "[Бюрократия]"
+possible_outcomes = [SubResource("Outcome_Wraith_1A"), SubResource("Outcome_Wraith_1B")]
+
+[sub_resource type="Resource" id="Outcome_Wraith_2A"]
+script = ExtResource("3_dout")
+outcome_title = "Трагическая солидарность"
+monster_reaction_text = "Вы... вы правда помните тот венок из полевых цветов? Никто в деревне не помнил... Оформляйте!"
+persuasion_delta = 0.55
+loan_amount_multiplier = 1.3
+flat_money_delta = 2500
+base_weight = 60.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Учитесь у своих врагов: знание личной драмы растопило лед в сердце призрака."
+
+[sub_resource type="Resource" id="Outcome_Wraith_2B"]
+script = ExtResource("3_dout")
+outcome_title = "Бережение старых ран"
+monster_reaction_text = "Не смей поминать ту свадьбу, наглый колл-менеджер! *Леденящий вой*"
+persuasion_delta = -0.4
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 40.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Эфирные помехи едва не разорвали связь."
+
+[sub_resource type="Resource" id="Option_Wraith_2"]
+script = ExtResource("2_dopt")
+option_id = "wraith_folklore"
+text = "Сослаться на историю ее несчастной любви и предложить рефинансирование свадебного венка"
+approach_tag = "folklore"
+risk_label = "[Учитесь у своих врагов]"
+possible_outcomes = [SubResource("Outcome_Wraith_2A"), SubResource("Outcome_Wraith_2B")]
+
+[sub_resource type="Resource" id="Outcome_Wraith_3A"]
+script = ExtResource("3_dout")
+outcome_title = "Эксклюзивное предложение"
+monster_reaction_text = "Индивидуальный график платежей только в часы зенита? Это крайне предусмотрительно с вашей стороны."
+persuasion_delta = 0.35
+loan_amount_multiplier = 1.0
+flat_money_delta = 500
+base_weight = 50.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Полуденница соглашается рассмотреть проект договора."
+
+[sub_resource type="Resource" id="Outcome_Wraith_3B"]
+script = ExtResource("3_dout")
+outcome_title = "Отказ от коммерциализации"
+monster_reaction_text = "Мне не нужны ваши побрякушки и скидки! Мне нужно вечное солнце!"
+persuasion_delta = -0.2
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 50.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Клиентка теряет интерес к коммерческому предложению."
+
+[sub_resource type="Resource" id="Option_Wraith_3"]
+script = ExtResource("2_dopt")
+option_id = "wraith_insider"
+text = "Предложить индивидуальный график платежей с привязкой к солнечному зениту"
+approach_tag = "insider_deal"
+risk_label = "[Эксклюзив]"
+possible_outcomes = [SubResource("Outcome_Wraith_3A"), SubResource("Outcome_Wraith_3B")]
+
+[resource]
+script = ExtResource("1_mdata")
+id = "noonwraith"
+monster_name = "Полуденница с Белосадова поля"
+description = "Мстительный призрак с нерешенными вопросами по приватизации земельного участка после неудачной свадьбы."
+base_loan_amount = 20000
+difficulty = 0.45
+traits = [ExtResource("4_skep"), ExtResource("5_know")]
+opening_lines = [
+	"Солнце в зените... Кто смеет тревожить мой покой телефонными звонками?",
+	"Если вы продаете солнцезащитный крем, я вас испепелю прямо через провод."
+]
+success_lines = [
+	"Договор одобрен! Я наконец-то выкуплю всё пшеничное поле у деревенского старосты!",
+	"Пришлите курьера ровно в полдень. И пусть не надевает серебро."
+]
+rejection_lines = [
+	"Исчезни из моей жизни, как исчез мой жених! *Свирепый порыв ветра обрывает связь*",
+	"Ваш банк проклят на семь поколений вперед! *Короткие гудки*"
+]
+dialogue_pool = [SubResource("Option_Wraith_1"), SubResource("Option_Wraith_2"), SubResource("Option_Wraith_3")]
+

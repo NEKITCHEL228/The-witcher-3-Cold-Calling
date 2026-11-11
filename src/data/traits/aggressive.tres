@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MonsterTrait" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/monster_trait.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = "aggressive"
+trait_name = "Вспыльчивость"
+description = "Легко раздражается от занудства. Любит уважительный тон и быстрое решение вопроса."
+tag = "aggressive"
+affinity_multiplier = 1.4
+weak_against_approaches = PackedStringArray("flattery", "urgency")
+strong_against_approaches = PackedStringArray("bureaucracy", "condescending")
+

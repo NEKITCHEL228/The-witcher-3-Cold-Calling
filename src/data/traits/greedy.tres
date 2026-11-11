@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MonsterTrait" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/monster_trait.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = "greedy"
+trait_name = "Алчность"
+description = "Падок на обещания легкой наживы и беспроцентные периоды. В бешенстве от скрытых страховок."
+tag = "greedy"
+affinity_multiplier = 1.5
+weak_against_approaches = PackedStringArray("greed_appeal", "discount")
+strong_against_approaches = PackedStringArray("collateral_demand", "intimidation")
+

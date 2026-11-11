@@ -1,0 +1,126 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://src/core/monster_data.gd" id="1_mdata"]
+[ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="2_dopt"]
+[ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="3_dout"]
+[ext_resource type="Resource" path="res://src/data/traits/greedy.tres" id="4_greedy"]
+[ext_resource type="Resource" path="res://src/data/traits/aggressive.tres" id="5_aggr"]
+
+[sub_resource type="Resource" id="Outcome_Drowner_1A"]
+script = ExtResource("3_dout")
+outcome_title = "Булькающий триумф"
+monster_reaction_text = "Буль-буль! Кредит на осушение болота? Да! Я построю плавучий ресторан!"
+persuasion_delta = 0.45
+loan_amount_multiplier = 1.2
+flat_money_delta = 1200
+base_weight = 60.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Утопец пускает счастливые пузыри."
+
+[sub_resource type="Resource" id="Outcome_Drowner_1B"]
+script = ExtResource("3_dout")
+outcome_title = "Мокрая ярость"
+monster_reaction_text = "Гр-р-р! Вы хотите осушить мой дом?! Я сам вас утоплю!"
+persuasion_delta = -0.3
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 40.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Из трубки капает болотная жижа."
+
+[sub_resource type="Resource" id="Option_Drowner_1"]
+script = ExtResource("2_dopt")
+option_id = "drowner_swamp_invest"
+text = "Предложить инвестиционный займ под развитие прибрежной инфраструктуры болот"
+approach_tag = "greed_appeal"
+risk_label = "[Выгода]"
+possible_outcomes = [SubResource("Outcome_Drowner_1A"), SubResource("Outcome_Drowner_1B")]
+
+[sub_resource type="Resource" id="Outcome_Drowner_2A"]
+script = ExtResource("3_dout")
+outcome_title = "Водный комплимент"
+monster_reaction_text = "Ква! Самый быстрый пловец Понтара? Приятно слышать! Диктуйте условия!"
+persuasion_delta = 0.35
+loan_amount_multiplier = 1.0
+flat_money_delta = 500
+base_weight = 55.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Утопец расслабился и расправил перепонки."
+
+[sub_resource type="Resource" id="Outcome_Drowner_2B"]
+script = ExtResource("3_dout")
+outcome_title = "Плевок тиной"
+monster_reaction_text = "Хватит мне льстить, бледнолицый! Скидку гони или проваливай!"
+persuasion_delta = -0.2
+loan_amount_multiplier = 0.95
+flat_money_delta = 0
+base_weight = 45.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Клиент заподозрил неискренность."
+
+[sub_resource type="Resource" id="Option_Drowner_2"]
+script = ExtResource("2_dopt")
+option_id = "drowner_flattery"
+text = "Похвалить непревзойденную грацию и прыгучесть среди всех обитателей Понтара"
+approach_tag = "flattery"
+risk_label = "[Лесть]"
+possible_outcomes = [SubResource("Outcome_Drowner_2A"), SubResource("Outcome_Drowner_2B")]
+
+[sub_resource type="Resource" id="Outcome_Drowner_3A"]
+script = ExtResource("3_dout")
+outcome_title = "Мгновенное решение"
+monster_reaction_text = "Только сегодня?! И страховка от ведьмаков в подарок?! Беру не глядя!"
+persuasion_delta = 0.5
+loan_amount_multiplier = 1.3
+flat_money_delta = 2500
+base_weight = 50.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Страховка от ведьмаков... Геральт внутренне ухмыльнулся."
+
+[sub_resource type="Resource" id="Outcome_Drowner_3B"]
+script = ExtResource("3_dout")
+outcome_title = "Панический сброс"
+monster_reaction_text = "Слишком много давления! Я на дно! *Бульк*"
+persuasion_delta = -0.4
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 50.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Утопец нырнул в илистое дно вместе с телефонной трубкой."
+
+[sub_resource type="Resource" id="Option_Drowner_3"]
+script = ExtResource("2_dopt")
+option_id = "drowner_urgency"
+text = "Поставить ультиматум: акция 'Страховка от ведьмаков в подарок' истекает через 5 минут"
+approach_tag = "urgency"
+risk_label = "[Палка о двух концах]"
+possible_outcomes = [SubResource("Outcome_Drowner_3A"), SubResource("Outcome_Drowner_3B")]
+
+[resource]
+script = ExtResource("1_mdata")
+id = "drowner"
+monster_name = "Утопец из дельты Понтара"
+description = "Амфибийный гуманоид. Мечтает об открытии подводного спа-салона и боится осенних заморозков."
+base_loan_amount = 10000
+difficulty = 0.2
+traits = [ExtResource("4_greedy"), ExtResource("5_aggr")]
+opening_lines = [
+	"Буль-буль... Алё? Меня слышно? Вода в микрофон затекла...",
+	"Ква-а-а! Кто звонит в тихий час?"
+]
+success_lines = [
+	"Договорились! Пришлите договор в непромокаемом пакете!",
+	"Буль! Отличный банк, всем сородичам в камышах порекомендую!"
+]
+rejection_lines = [
+	"Глупый сухопутный планктон! *Звук падения аппарата в реку*",
+	"Буль-буль-хрясь! *Утопец перекусил провод зубами*"
+]
+dialogue_pool = [SubResource("Option_Drowner_1"), SubResource("Option_Drowner_2"), SubResource("Option_Drowner_3")]
+

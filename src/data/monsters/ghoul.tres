@@ -1,0 +1,158 @@
+[gd_resource type="Resource" script_class="MonsterData" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://src/core/monster_data.gd" id="1_mdata"]
+[ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="2_dopt"]
+[ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="3_dout"]
+[ext_resource type="Resource" path="res://src/data/traits/greedy.tres" id="4_greedy"]
+[ext_resource type="Resource" path="res://src/data/traits/aggressive.tres" id="5_aggr"]
+
+[sub_resource type="Resource" id="Outcome_Ghoul_1A"]
+script = ExtResource("3_dout")
+outcome_title = "Жадный блеск в глазах"
+monster_reaction_text = "Склеп под залог? Да там всё равно одни кости! Давайте ваши орены!"
+persuasion_delta = 0.35
+loan_amount_multiplier = 1.15
+flat_money_delta = 1000
+base_weight = 60.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Гуль от восторга начинает царапать когтями телефонный аппарат."
+
+[sub_resource type="Resource" id="Outcome_Ghoul_1B"]
+script = ExtResource("3_dout")
+outcome_title = "Подозрение на комиссию"
+monster_reaction_text = "А процент какой? Вы небось сами ночью этот склеп обчистите?!"
+persuasion_delta = -0.2
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 40.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Гуль грозно сопит в трубку."
+
+[sub_resource type="Resource" id="Option_Ghoul_1"]
+script = ExtResource("2_dopt")
+option_id = "ghoul_crypt"
+text = "Предложить займ под залог неразграбленного склепа"
+approach_tag = "greed_appeal"
+risk_label = "[Выгода]"
+possible_outcomes = [SubResource("Outcome_Ghoul_1A"), SubResource("Outcome_Ghoul_1B")]
+
+[sub_resource type="Resource" id="Outcome_Ghoul_2A"]
+script = ExtResource("3_dout")
+outcome_title = "Бюрократический гипноз"
+monster_reaction_text = "Э-э... Пункт 4.1? Звучит солидно. Давайте подпишем, только не грузите словами."
+persuasion_delta = 0.2
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 30.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Клиент задремал от перечисления статей устава."
+
+[sub_resource type="Resource" id="Outcome_Ghoul_2B"]
+script = ExtResource("3_dout")
+outcome_title = "Вспышка ярости"
+monster_reaction_text = "Ты мне мозги не пудри своими бумажками! Я голодный, а не юрист!"
+persuasion_delta = -0.35
+loan_amount_multiplier = 0.9
+flat_money_delta = 0
+base_weight = 70.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Раздражение гуля опасно нарастает."
+
+[sub_resource type="Resource" id="Option_Ghoul_2"]
+script = ExtResource("2_dopt")
+option_id = "ghoul_bureaucracy"
+text = "Зачитать параграф 4.1 о защите прав падальщиков в Велене"
+approach_tag = "bureaucracy"
+risk_label = "[Палка о двух концах]"
+possible_outcomes = [SubResource("Outcome_Ghoul_2A"), SubResource("Outcome_Ghoul_2B")]
+
+[sub_resource type="Resource" id="Outcome_Ghoul_3A"]
+script = ExtResource("3_dout")
+outcome_title = "Паническая срочность"
+monster_reaction_text = "Археологи идут?! О боги, оформляйте немедленно, мне нужно выкупить курган!"
+persuasion_delta = 0.45
+loan_amount_multiplier = 1.2
+flat_money_delta = 2000
+base_weight = 55.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Гуль в панике соглашается на повышенную кредитную ставку."
+
+[sub_resource type="Resource" id="Outcome_Ghoul_3B"]
+script = ExtResource("3_dout")
+outcome_title = "Обида"
+monster_reaction_text = "Ты меня запугать вздумал? Да я этих археологов на завтрак съем! Зараза!"
+persuasion_delta = -0.3
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 45.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Гуль плюнул в телефонную трубку."
+
+[sub_resource type="Resource" id="Option_Ghoul_3"]
+script = ExtResource("2_dopt")
+option_id = "ghoul_urgency"
+text = "Предупредить о скором рейде реданских археологов: деньги нужны сейчас"
+approach_tag = "urgency"
+risk_label = "[Давление]"
+possible_outcomes = [SubResource("Outcome_Ghoul_3A"), SubResource("Outcome_Ghoul_3B")]
+
+[sub_resource type="Resource" id="Outcome_Ghoul_4A"]
+script = ExtResource("3_dout")
+outcome_title = "Ведьмачье знание бестиария"
+monster_reaction_text = "Ого, да ты понимаешь толк в нормальной диете! Ладно, ведьмак, беру твой кредит!"
+persuasion_delta = 0.5
+loan_amount_multiplier = 1.25
+flat_money_delta = 3000
+base_weight = 65.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Проклятие знаний обернулось идеальным попаданием в целевую аудиторию."
+
+[sub_resource type="Resource" id="Outcome_Ghoul_4B"]
+script = ExtResource("3_dout")
+outcome_title = "Неловкий намек"
+monster_reaction_text = "Ты на что намекаешь, седой? Думаешь, я падаль люблю? Я гурман вообще-то!"
+persuasion_delta = -0.2
+loan_amount_multiplier = 1.0
+flat_money_delta = 0
+base_weight = 35.0
+is_instant_hangup = false
+is_instant_success = false
+side_effect_description = "Гуль уязвлен гастрономическими стереотипами."
+
+[sub_resource type="Resource" id="Option_Ghoul_4"]
+script = ExtResource("2_dopt")
+option_id = "ghoul_folklore"
+text = "Проявить знание привычек: предложить оптовый кредит на дезинфекцию могильников"
+approach_tag = "folklore"
+risk_label = "[Проклятие знаний]"
+possible_outcomes = [SubResource("Outcome_Ghoul_4A"), SubResource("Outcome_Ghoul_4B")]
+
+[resource]
+script = ExtResource("1_mdata")
+id = "ghoul"
+monster_name = "Гуль из Оксенфуртских склепов"
+description = "Падальщик среднего звена. Жалуется на дефицит погребений и кризис в сфере похоронных услуг."
+base_loan_amount = 12000
+difficulty = 0.25
+traits = [ExtResource("4_greedy"), ExtResource("5_aggr")]
+opening_lines = [
+	"Алё? Кто звонит? Если из стражи — я эти кости нашел, они тут лежали!",
+	"Слушаю вас... Только быстро, у меня раскопки горят."
+]
+success_lines = [
+	"Ха-ха! Сделка года! Где расписаться слюной?",
+	"Деньги на карту переведете или через голубиную почту?"
+]
+rejection_lines = [
+	"Тьфу на вас и на ваш банк! Пойду к накерам займу! *Бросил трубку*",
+	"Зараза седая, чтоб тебя виверна за ногу укусила! *Короткие гудки*"
+]
+dialogue_pool = [SubResource("Option_Ghoul_1"), SubResource("Option_Ghoul_2"), SubResource("Option_Ghoul_3"), SubResource("Option_Ghoul_4")]
+

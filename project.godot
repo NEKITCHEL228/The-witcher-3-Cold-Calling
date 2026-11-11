@@ -11,12 +11,19 @@ config_version=5
 [application]
 
 config/name="The-witcher-3-Cold-Calling"
+run/main_scene="res://src/scenes/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
+Events="*res://src/autoload/events.gd"
+GameManager="*res://src/autoload/game_manager.gd"
+AudioManager="*res://src/autoload/audio_manager.gd"
 MCPRuntime="*uid://oqqkrb33oocp"
+AudioManager="*res://src/autoload/audio_manager.gd"
+Events="*res://src/autoload/events.gd"
+GameManager="*res://src/autoload/game_manager.gd"
 
 [display]
 

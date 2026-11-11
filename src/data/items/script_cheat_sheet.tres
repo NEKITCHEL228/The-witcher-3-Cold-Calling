@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ShopItem" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/shop_item.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = "script_cheat_sheet"
+item_name = "Шпаргалка холодных продаж"
+description = "Листок с подсказками, приклеенный к монитору. Увеличивает количество доступных вариантов ответа до 3."
+cost = 500
+item_type = 1
+effect_value = 1.0
+is_consumed_on_use = false
+is_permanent = true
+jam_theme_tag = "Учитесь у своих врагов"
+side_effect_text = "Написана бывшим топ-менеджером, обращенным в призрака."
+
