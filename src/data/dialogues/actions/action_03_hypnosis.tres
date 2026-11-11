@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="DialogueOption" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="1_opt"]
+[ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="2_out"]
+
+[sub_resource type="Resource" id="Outcome_03_InstantWin"]
+script = ExtResource("2_out")
+outcome_title = "Критический гипноз"
+monster_reaction_text = "Да... Хочу кредит... Ваши условия прекрасны... Где расписаться когтем?!"
+persuasion_delta = 1.0
+is_instant_success = true
+base_weight = 5.0
+short_badge = "💎 {pct} ★ПОБЕДА★"
+side_effect_description = "Мгновенное закрытие сделки! Чистый триумф переговоров."
+
+[sub_resource type="Resource" id="Outcome_03_Awkward"]
+script = ExtResource("2_out")
+outcome_title = "Легкое замешательство"
+monster_reaction_text = "Ты чего там бормочешь в трубку монотонным голосом? Говори громче."
+persuasion_delta = -0.1
+base_weight = 35.0
+short_badge = "🟠 {pct} ↓-10%"
+side_effect_description = "Клиент почувствовал фальшь в интонациях."
+
+[sub_resource type="Resource" id="Outcome_03_Repelled"]
+script = ExtResource("2_out")
+outcome_title = "Срыв гипноза"
+monster_reaction_text = "Аксий через телефонный провод?! Ты совсем из ума выжил, мутант?! Я тебе покажу гипноз!"
+persuasion_delta = -0.4
+base_weight = 60.0
+short_badge = "🔴 {pct} ↓-40%"
+side_effect_description = "Грубый отпор шарлатанству."
+
+[resource]
+script = ExtResource("1_opt")
+option_id = "action_03_hypnosis"
+option_name = "Гипнотический дожим"
+text = "[Имитация знака Аксий] Вы хотите этот кредит. Ваши когти сами тянутся к договору. Просто скажите «да» прямо сейчас."
+approach_tag = "folklore"
+domain_category = "Лотерея"
+risk_label = "[Критический риск]"
+possible_outcomes = [SubResource("Outcome_03_InstantWin"), SubResource("Outcome_03_Awkward"), SubResource("Outcome_03_Repelled")]

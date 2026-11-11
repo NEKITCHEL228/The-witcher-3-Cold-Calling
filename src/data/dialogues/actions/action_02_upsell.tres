@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="DialogueOption" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="1_opt"]
+[ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="2_out"]
+
+[sub_resource type="Resource" id="Outcome_02_CreditBoost"]
+script = ExtResource("2_out")
+outcome_title = "Жадный аппетит"
+monster_reaction_text = "Утроить сумму?! Хм-м... А ведь на это можно отгрохать целый склеп с золотыми надгробиями! Оформляй максимум!"
+persuasion_delta = 0.1
+loan_amount_multiplier = 1.77
+base_weight = 34.0
+short_badge = "🟡 {pct} 💰+77%"
+side_effect_description = "Размер займа увеличен на +77.7%! Огромный скачок комиссии."
+
+[sub_resource type="Resource" id="Outcome_02_Hesitation"]
+script = ExtResource("2_out")
+outcome_title = "Финансовое сомнение"
+monster_reaction_text = "Куда мне столько? Вы мне кабалу на шею накинуть пытаетесь? Я подумаю..."
+persuasion_delta = -0.33
+loan_amount_multiplier = 1.0
+base_weight = 33.0
+short_badge = "🟠 {pct} ↓-33%"
+side_effect_description = "Клиент насторожился из-за завышенной суммы."
+
+[sub_resource type="Resource" id="Outcome_02_Outrage"]
+script = ExtResource("2_out")
+outcome_title = "Шок от ценника"
+monster_reaction_text = "Ты за кого меня держишь?! Под 60% годовых?! Ищи дураков в Новиградском ломбарде!"
+persuasion_delta = -0.66
+loan_amount_multiplier = 1.0
+base_weight = 33.0
+short_badge = "🔴 {pct} ↓↓-66%"
+side_effect_description = "Тяжелый удар по доверию из-за жадного тарифа."
+
+[resource]
+script = ExtResource("1_opt")
+option_id = "action_02_upsell"
+option_name = "Агрессивный апсейл"
+text = "А что если мы утроим сумму займа? Всего под 60% годовых, а в качестве залога оставите пару неразграбленных курганов."
+approach_tag = "greed_appeal"
+domain_category = "Размер займа"
+risk_label = "[Высокий риск]"
+possible_outcomes = [SubResource("Outcome_02_CreditBoost"), SubResource("Outcome_02_Hesitation"), SubResource("Outcome_02_Outrage")]

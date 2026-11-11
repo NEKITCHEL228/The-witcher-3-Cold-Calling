@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="DialogueOption" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="1_opt"]
+[ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="2_out"]
+
+[sub_resource type="Resource" id="Outcome_04_Duplicate"]
+script = ExtResource("2_out")
+outcome_title = "Удачная находка"
+monster_reaction_text = "Ого, да ты достал любопытную вещицу! Ладно, продолжай, я слушаю внимательнее."
+persuasion_delta = 0.05
+duplicate_random_item = true
+base_weight = 20.0
+short_badge = "🎁 {pct} 🎒x2"
+side_effect_description = "Случайный предмет из инвентаря скопирован!"
+
+[sub_resource type="Resource" id="Outcome_04_Nothing"]
+script = ExtResource("2_out")
+outcome_title = "Шуршание по карманам"
+monster_reaction_text = "Ну и чего ты там копошишься и шуршишь? Говори по существу договора."
+persuasion_delta = 0.0
+base_weight = 60.0
+short_badge = "⚪ {pct} ＝"
+side_effect_description = "Ничего не произошло, статус-кво сохранен."
+
+[sub_resource type="Resource" id="Outcome_04_Lose"]
+script = ExtResource("2_out")
+outcome_title = "Неуклюжие пальцы"
+monster_reaction_text = "Звук такой, будто у тебя что-то грохнулось об пол. Руки дрожат, ведьмак?"
+persuasion_delta = -0.1
+remove_random_item = true
+base_weight = 20.0
+short_badge = "💔 {pct} 🎒-1"
+side_effect_description = "От нервов случайный предмет выпал из кармана и разбился!"
+
+[resource]
+script = ExtResource("1_opt")
+option_id = "action_04_pocket_trick"
+option_name = "Карманный трюк"
+text = "Погодите секунду... У меня тут в кармане завалялась полезная вещица для нашего разговора."
+approach_tag = "flattery"
+domain_category = "Инвентарь"
+risk_label = "[Риск вещами]"
+possible_outcomes = [SubResource("Outcome_04_Duplicate"), SubResource("Outcome_04_Nothing"), SubResource("Outcome_04_Lose")]

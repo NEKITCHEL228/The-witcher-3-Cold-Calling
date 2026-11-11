@@ -36,13 +36,17 @@ func _on_outcome_resolved(_outcome: DialogueOutcome, _monster_reaction: String) 
 
 func populate_options(monster: MonsterData) -> void:
 	_clear_all()
-	if monster == null or monster.dialogue_pool.is_empty():
-		return
 
 	var unlocked_slots: int = GameManager.dialogue_slots
-	var available_pool: Array[DialogueOption] = monster.dialogue_pool.duplicate()
+	var available_pool: Array[DialogueOption] = []
+	if monster and not monster.dialogue_pool.is_empty():
+		available_pool.append_array(monster.dialogue_pool)
+	available_pool.append_array(GameManager.global_actions_pool)
 	available_pool.shuffle()
 	
+	if available_pool.is_empty():
+		return
+
 	_current_options.clear()
 	var count: int = mini(unlocked_slots, available_pool.size())
 	for i in range(count):
@@ -77,16 +81,20 @@ func _create_option_button(index: int, option: DialogueOption) -> Button:
 
 	var text_lbl := Label.new()
 	text_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	text_lbl.text = "%d. %s" % [index, option.text]
+	var display_title := option.option_name if not option.option_name.is_empty() else option.text
+	text_lbl.text = "%d. %s" % [index, display_title]
 	text_lbl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	text_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hbox.add_child(text_lbl)
 
-	# Calculate odds for the right side: e.g. "67% ↑  33% ↓"
-	var odds_str := _calculate_odds_string(option)
+	# Calculate odds for the right side: e.g. "🟢 50% ↑ | 🔴 50% ↓"
+	var odds_str := option.get_short_odds_string()
+	if odds_str.is_empty():
+		odds_str = _calculate_odds_string(option)
 	var odds_lbl := Label.new()
 	odds_lbl.text = odds_str
 	odds_lbl.add_theme_color_override("font_color", Color(0.9, 0.85, 0.4))
+	odds_lbl.add_theme_font_size_override("font_size", 12)
 	odds_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hbox.add_child(odds_lbl)
 

@@ -39,6 +39,7 @@ extends Control
 func _ready() -> void:
 	Events.call_started.connect(_on_call_started)
 	Events.call_finished.connect(_on_call_finished)
+	Events.call_turns_changed.connect(_on_call_turns_changed)
 	Events.outcome_resolved.connect(_on_outcome_resolved)
 	Events.player_balance_changed.connect(_on_balance_changed)
 	Events.quota_updated.connect(_on_quota_updated)
@@ -53,12 +54,16 @@ func _ready() -> void:
 	if GameManager.state == GameManager.GameState.START_DAY:
 		_prepare_desk_for_call()
 
+func _on_call_turns_changed(_turns_left: int, _delta: int) -> void:
+	_refresh_player_stats()
+
 func _refresh_player_stats() -> void:
 	cash_label.text = "%d $" % GameManager.player_cash
-	day_info_label.text = "День %d/%d (Звонков: %d)" % [
+	day_info_label.text = "День %d/%d (Звонки: %d) | Терпение: %d" % [
 		GameManager.current_day,
 		GameManager.MAX_DAYS,
-		GameManager.calls_remaining_today
+		GameManager.calls_remaining_today,
+		GameManager.call_turns_remaining
 	]
 	var commission: int = QuotaManager.calculate_commission(GameManager.current_call_loan_amount)
 	loan_bonus_label.text = "+%d $" % commission
@@ -159,30 +164,49 @@ func _on_dialogue_option_hovered(option: DialogueOption) -> void:
 		_reset_effects_panel()
 		return
 
-	effect_approach_label.text = "ПОДХОД: [%s] %s" % [option.approach_tag.to_upper(), option.risk_label]
-	effect_desc_label.text = "Реплика: «%s»" % option.text
+	effect_approach_label.text = "ДЕЙСТВИЕ: %s [%s]" % [
+		option.option_name,
+		option.domain_category.to_upper()
+	]
+	
+	var lines: Array[String] = []
+	lines.append("Реплика: «%s»" % option.text)
+	lines.append("Возможные исходы:")
+	var total_w: float = 0.0
+	for out in option.possible_outcomes:
+		total_w += out.base_weight
+	if total_w <= 0.0:
+		total_w = 1.0
+
+	for out in option.possible_outcomes:
+		var pct := int(round(out.base_weight / total_w * 100.0))
+		lines.append(" • %d%%: %s (%s)" % [pct, out.outcome_title, out.side_effect_description])
+
+	effect_desc_label.text = "\n".join(lines)
 
 	# Check trait synergy
 	if GameManager.current_monster:
 		var has_synergy: bool = false
 		for m_trait in GameManager.current_monster.traits:
 			if m_trait and option.approach_tag in m_trait.weak_against_approaches:
-				effect_trait_synergy_label.text = "★ СЛАБОСТЬ МОНСТРА к [%s] (+50%% шанс согласия!)" % m_trait.trait_name
+				effect_trait_synergy_label.text = "★ СЛАБОСТЬ КЛИЕНТА к [%s] (+50%% к шансу успеха!)" % m_trait.trait_name
 				effect_trait_synergy_label.modulate = Color(0.3, 1.0, 0.4)
 				has_synergy = true
 				break
 			elif m_trait and option.approach_tag in m_trait.strong_against_approaches:
-				effect_trait_synergy_label.text = "⚠ СОПРОТИВЛЕНИЕ МОНСТРА к [%s] (Высок риск отказа!)" % m_trait.trait_name
+				effect_trait_synergy_label.text = "⚠ СОПРОТИВЛЕНИЕ КЛИЕНТА к [%s] (Высок риск отказа!)" % m_trait.trait_name
 				effect_trait_synergy_label.modulate = Color(1.0, 0.35, 0.35)
 				has_synergy = true
 				break
 		if not has_synergy:
-			effect_trait_synergy_label.text = "Обычный эффект на монстра (нейтральная реакция)"
+			effect_trait_synergy_label.text = "Нейтральный отклик на подход"
 			effect_trait_synergy_label.modulate = Color(0.85, 0.85, 0.85)
 
-	effect_side_label.text = "Возможен побочный эффект при броске кубика"
 	var commission: int = QuotaManager.calculate_commission(GameManager.current_call_loan_amount)
-	effect_loan_delta_label.text = "Ожидаемый бонус: +%d $ при успехе" % commission
+	effect_loan_delta_label.text = "Текущий кредит: %d орен | Комиссия: +%d $" % [
+		GameManager.current_call_loan_amount,
+		commission
+	]
 
 func _reset_effects_panel() -> void:
 	effect_approach_label.text = "НАВЕДИТЕСЬ НА ВАРИАНТ ДИАЛОГА"

@@ -32,18 +32,33 @@ var player_luck: float = 0.0
 var dialogue_slots: int = 2 # Default 2 options, upgradeable in shop to 3 or 4
 var hangup_shield: bool = false
 var initial_persuasion_bonus: float = 0.0
+var next_turn_item_multiplier: float = 1.0 # Temporary multiplier from Option 9
 var inventory: Array[ShopItem] = []
 
 # --- Current Call Context ---
+const BASE_CALL_TURNS: int = 6
+var call_turns_remaining: int = BASE_CALL_TURNS
 var current_monster: MonsterData = null
 var current_persuasion: float = 0.0 # -1.0 (-100%) to +1.0 (+100%), 0.0 = neutral
 var current_call_loan_amount: int = 0
 
-# --- Monster Database ---
+# --- Monster & Actions Database ---
 var monster_roster: Array[MonsterData] = []
+var global_actions_pool: Array[DialogueOption] = []
 
 func _ready() -> void:
 	_load_monsters_roster()
+	_load_global_actions()
+
+func _load_global_actions() -> void:
+	global_actions_pool.clear()
+	for i in range(1, 11):
+		var num_str := "%02d" % i
+		var path := "res://src/data/dialogues/actions/action_%s.tres" % num_str
+		if ResourceLoader.exists(path):
+			var opt := load(path) as DialogueOption
+			if opt != null:
+				global_actions_pool.append(opt)
 
 func _load_monsters_roster() -> void:
 	# Load pre-configured monsters from data directory
@@ -88,6 +103,8 @@ func start_next_call() -> void:
 
 	state = GameState.CALL_IN_PROGRESS
 	calls_remaining_today -= 1
+	call_turns_remaining = BASE_CALL_TURNS
+	next_turn_item_multiplier = 1.0
 	
 	# Pick random or sequential monster from roster
 	if not monster_roster.is_empty():
@@ -102,22 +119,61 @@ func start_next_call() -> void:
 	current_call_loan_amount = current_monster.base_loan_amount
 
 	Events.call_started.emit(current_monster)
+	Events.call_turns_changed.emit(call_turns_remaining, 0)
 	Events.persuasion_changed.emit(current_persuasion, 0.0)
 
 func process_dialogue_choice(option: DialogueOption) -> DialogueOutcome:
 	if state != GameState.CALL_IN_PROGRESS:
 		return null
 
-	var outcome: DialogueOutcome = CallResolver.resolve(option, current_monster, player_luck)
+	var effective_luck: float = player_luck * next_turn_item_multiplier
+	next_turn_item_multiplier = 1.0 # Reset temporary item multiplier
+
+	var outcome: DialogueOutcome = CallResolver.resolve(option, current_monster, effective_luck)
 	
-	# Apply outcomes
+	# 1. Apply persuasion shifts (including Option 1 half-scale shift)
 	var delta: float = outcome.persuasion_delta
+	if outcome.is_half_scale_shift:
+		if outcome.persuasion_delta >= 0.0:
+			delta = maxf(0.2, (1.0 - current_persuasion) * 0.5)
+		else:
+			delta = -maxf(0.2, (current_persuasion - (-1.0)) * 0.5)
+
 	var old_persuasion: float = current_persuasion
 	current_persuasion = clampf(current_persuasion + delta, -1.0, 1.0)
 	
-	# Adjust loan amount
+	# 2. Adjust loan amount
 	current_call_loan_amount = int(float(current_call_loan_amount) * outcome.loan_amount_multiplier) + outcome.flat_money_delta
 	current_call_loan_amount = maxi(1000, current_call_loan_amount)
+
+	# 3. Turns management (Option 5, 8)
+	call_turns_remaining -= 1
+	if outcome.turns_delta != 0:
+		call_turns_remaining = maxi(0, call_turns_remaining + outcome.turns_delta)
+	Events.call_turns_changed.emit(call_turns_remaining, outcome.turns_delta - 1)
+
+	# 4. Quota management (Option 10)
+	if outcome.quota_percent_delta != 0.0:
+		target_quota = maxi(1000, int(float(target_quota) * (1.0 + outcome.quota_percent_delta)))
+		Events.quota_updated.emit(current_quota_progress, target_quota)
+
+	# 5. Day calls limit modifier (Option 10)
+	if outcome.day_calls_delta != 0:
+		calls_remaining_today = maxi(0, calls_remaining_today + outcome.day_calls_delta)
+
+	# 6. Item manipulation (Option 4)
+	if outcome.duplicate_random_item and not inventory.is_empty():
+		var dup_item: ShopItem = inventory.pick_random()
+		inventory.append(dup_item)
+		Events.log_message_posted.emit("Дублирован предмет: %s!" % dup_item.item_name, Color.CYAN)
+	elif outcome.remove_random_item and not inventory.is_empty():
+		var rem_item: ShopItem = inventory.pick_random()
+		inventory.erase(rem_item)
+		Events.log_message_posted.emit("Утрачен предмет: %s!" % rem_item.item_name, Color.CORAL)
+
+	# 7. Next turn item multiplier (Option 9)
+	if outcome.next_turn_item_multiplier != 1.0:
+		next_turn_item_multiplier = outcome.next_turn_item_multiplier
 
 	# Emit events
 	Events.persuasion_changed.emit(current_persuasion, current_persuasion - old_persuasion)
@@ -135,6 +191,9 @@ func process_dialogue_choice(option: DialogueOption) -> DialogueOutcome:
 	if outcome.is_instant_success or current_persuasion >= 0.99:
 		finish_call(true)
 	elif current_persuasion <= -0.99:
+		finish_call(false)
+	elif call_turns_remaining <= 0:
+		Events.log_message_posted.emit("Терпение клиента иссякло! Звонок прерван.", Color.SALMON)
 		finish_call(false)
 
 	return outcome

@@ -7,6 +7,8 @@ extends Node
 @warning_ignore("unused_signal")
 signal call_started(monster: MonsterData)
 @warning_ignore("unused_signal")
+signal call_turns_changed(turns_left: int, delta: int)
+@warning_ignore("unused_signal")
 signal persuasion_changed(new_value: float, delta: float)
 @warning_ignore("unused_signal")
 signal dialogue_chosen(option: DialogueOption)

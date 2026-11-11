@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="DialogueOption" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://src/core/dialogue_option.gd" id="1_opt"]
+[ext_resource type="Script" path="res://src/core/dialogue_outcome.gd" id="2_out"]
+
+[sub_resource type="Resource" id="Outcome_06_Guaranteed"]
+script = ExtResource("2_out")
+outcome_title = "Строгий регламент"
+monster_reaction_text = "Бесплатный расчет по реестру Темерии? Звучит солидно и благочестиво. Продолжайте."
+persuasion_delta = 0.2
+base_weight = 100.0
+short_badge = "🛡️ 100% ↑+20%"
+side_effect_description = "Гарантированный безопасный шаг без риска потерять доверие."
+
+[resource]
+script = ExtResource("1_opt")
+option_id = "action_06_safe_script"
+option_name = "Корпоративный скрипт"
+text = "Согласно регламенту компании «Орен-Займ», клиентам вашей категории положен бесплатный аудит кредитной истории."
+approach_tag = "bureaucracy"
+domain_category = "Доверие"
+risk_label = "[Безопасно]"
+possible_outcomes = [SubResource("Outcome_06_Guaranteed")]
