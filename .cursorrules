@@ -1,0 +1,18 @@
+# Cursor Rules for "The Witcher 3: Cold Calling"
+# Follows ECC standards (affaan-m/ecc)
+
+Please review and adhere to `AGENTS.md` and all rule files in `rules/`:
+- `rules/common/agents.md`
+- `rules/common/coding-style.md`
+- `rules/common/patterns.md`
+- `rules/common/gamejam.md`
+- `rules/godot/gdscript-rules.md`
+- `rules/godot/data-driven.md`
+- `rules/godot/ui-ux.md`
+
+Key Directives:
+1. Engine: Godot 4 (GDScript 2.0 with static typing).
+2. Data-Driven: Never hardcode dialogues or monster stats; use custom Resource `.tres` files.
+3. EventBus: All scene/UI signals pass through `Events.gd`.
+4. Jam Rules: "Дикая неОхота" — strictly NO fighting, NO 18+, incorporate the 5 jam themes.
+
