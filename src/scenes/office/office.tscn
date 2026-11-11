@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmkvoffice01"]
+[gd_scene load_steps=6 format=3 uid="uid://dmkvoffice01"]
 
 [ext_resource type="Script" path="res://src/scenes/office/office.gd" id="1_script"]
-[ext_resource type="PackedScene" uid="uid://dmkvstatbar01" path="res://src/ui/stat_bar/stat_bar.tscn" id="2_statbar"]
-[ext_resource type="PackedScene" uid="uid://dmkvpersuasion01" path="res://src/ui/persuasion_meter/persuasion_meter.tscn" id="3_meter"]
-[ext_resource type="PackedScene" uid="uid://dmkvdialogue01" path="res://src/ui/dialogue_box/dialogue_box.tscn" id="4_dialogue"]
+[ext_resource type="PackedScene" uid="uid://dmkvpersuasion01" path="res://src/ui/persuasion_meter/persuasion_meter.tscn" id="2_meter"]
+[ext_resource type="PackedScene" uid="uid://dmkvdialogue01" path="res://src/ui/dialogue_box/dialogue_box.tscn" id="3_dialogue"]
+[ext_resource type="Texture2D" path="res://assets/textures/ui/geralt_headset.svg" id="4_geralt"]
+[ext_resource type="Texture2D" path="res://assets/textures/monsters/monster_silhouette.svg" id="5_monster"]
 
 [node name="Office" type="Control"]
 layout_mode = 3
@@ -21,163 +22,309 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.14, 0.15, 0.18, 1)
+color = Color(0.1, 0.11, 0.14, 1)
 
-[node name="StatBar" parent="." instance=ExtResource("2_statbar")]
-layout_mode = 1
-
-[node name="PersuasionMeter" parent="." instance=ExtResource("3_meter")]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = 65.0
-offset_right = -20.0
-offset_bottom = -280.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="CallArea" type="Control" parent="."]
+[node name="TopContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 65.0
-offset_right = -270.0
-offset_bottom = -280.0
+anchor_bottom = 0.52
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MonsterCard" type="Panel" parent="CallArea"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MonsterNameLabel" type="Label" parent="CallArea/MonsterCard"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = -20.0
-offset_bottom = 48.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.95, 0.8, 0.2, 1)
-theme_override_font_sizes/font_size = 22
-text = "Клиент: —"
-
-[node name="MonsterDescLabel" type="Label" parent="CallArea/MonsterCard"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 20.0
-offset_top = 50.0
-offset_right = -20.0
-offset_bottom = 85.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.75, 0.75, 0.8, 1)
-theme_override_font_sizes/font_size = 13
-text = "Ожидание соединения..."
-autowrap_mode = 2
-
-[node name="LoanRequestLabel" type="Label" parent="CallArea/MonsterCard"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 20.0
-offset_top = 90.0
-offset_right = -20.0
-offset_bottom = 115.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.5, 1)
-theme_override_font_sizes/font_size = 14
-text = "Запрашиваемый кредит: —"
-
-[node name="TraitsContainer" type="HBoxContainer" parent="CallArea/MonsterCard"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 20.0
-offset_top = 125.0
-offset_right = -20.0
-offset_bottom = 160.0
-grow_horizontal = 2
 theme_override_constants/separation = 10
 
-[node name="SpeechBubble" type="Panel" parent="CallArea/MonsterCard"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -120.0
-offset_right = -20.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="GeraltPanel" type="Panel" parent="TopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.2
 
-[node name="SpeechLabel" type="Label" parent="CallArea/MonsterCard/SpeechBubble"]
+[node name="GeraltHeader" type="HBoxContainer" parent="TopContainer/GeraltPanel"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 10.0
-offset_right = -16.0
-offset_bottom = -10.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 54.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 15
-text = "..."
-autowrap_mode = 2
+theme_override_constants/separation = 16
+
+[node name="CashBox" type="VBoxContainer" parent="TopContainer/GeraltPanel/GeraltHeader"]
+layout_mode = 2
+alignment = 1
+
+[node name="CashCaption" type="Label" parent="TopContainer/GeraltPanel/GeraltHeader/CashBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
+theme_override_font_sizes/font_size = 10
+text = "ЩАС ДЕНЕГ:"
+
+[node name="CashValue" type="Label" parent="TopContainer/GeraltPanel/GeraltHeader/CashBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 20
+text = "9999 $"
+
+[node name="CreditBox" type="VBoxContainer" parent="TopContainer/GeraltPanel/GeraltHeader"]
+layout_mode = 2
+alignment = 1
+
+[node name="CreditCaption" type="Label" parent="TopContainer/GeraltPanel/GeraltHeader/CreditBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
+theme_override_font_sizes/font_size = 10
+text = "ЗА КРЕДИТ:"
+
+[node name="CreditValue" type="Label" parent="TopContainer/GeraltPanel/GeraltHeader/CreditBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.95, 0.45, 1)
+theme_override_font_sizes/font_size = 20
+text = "+322 $"
+
+[node name="DayInfoLabel" type="Label" parent="TopContainer/GeraltPanel/GeraltHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.8, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "День 1/5 (Звонков: 3)"
+horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="CallStatusLabel" type="Label" parent="CallArea"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 10.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 13
-text = "Телефон свободен."
-horizontal_alignment = 1
-
-[node name="ActionButtons" type="HBoxContainer" parent="CallArea"]
+[node name="GeraltPortrait" type="TextureRect" parent="TopContainer/GeraltPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = -24.0
-offset_right = 120.0
-offset_bottom = 24.0
+offset_left = -110.0
+offset_top = -95.0
+offset_right = 110.0
+offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
+texture = ExtResource("4_geralt")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="DialButton" type="Button" parent="CallArea/ActionButtons"]
-custom_minimum_size = Vector2(240, 48)
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Сделать звонок"
-
-[node name="DialogueBox" parent="." instance=ExtResource("4_dialogue")]
+[node name="DialButton" type="Button" parent="TopContainer/GeraltPanel"]
+custom_minimum_size = Vector2(220, 38)
 layout_mode = 1
-offset_left = 20.0
-offset_top = -260.0
-offset_right = -20.0
-offset_bottom = -15.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -46.0
+offset_right = 110.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "Набрать клиента"
 
+[node name="PersuasionMeter" parent="TopContainer" instance=ExtResource("2_meter")]
+custom_minimum_size = Vector2(130, 310)
+layout_mode = 2
+
+[node name="MonsterPanel" type="Panel" parent="TopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.2
+
+[node name="MonsterHeader" type="HBoxContainer" parent="TopContainer/MonsterPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="MonsterNameLabel" type="Label" parent="TopContainer/MonsterPanel/MonsterHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.8, 0.3, 1)
+theme_override_font_sizes/font_size = 15
+text = "Клиент: Нечисть"
+
+[node name="TraitsHBox" type="HBoxContainer" parent="TopContainer/MonsterPanel/MonsterHeader"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MonsterPortrait" type="TextureRect" parent="TopContainer/MonsterPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -105.0
+offset_right = -15.0
+offset_bottom = 135.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("5_monster")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SpeechBubble" type="Panel" parent="TopContainer/MonsterPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 50.0
+offset_right = -190.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpeechLabel" type="Label" parent="TopContainer/MonsterPanel/SpeechBubble"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "..."
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="BottomContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 340.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="DialogueBox" parent="BottomContainer" instance=ExtResource("3_dialogue")]
+custom_minimum_size = Vector2(440, 280)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.25
+
+[node name="EffectsPanel" type="Panel" parent="BottomContainer"]
+custom_minimum_size = Vector2(400, 280)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.15
+
+[node name="VBox" type="VBoxContainer" parent="BottomContainer/EffectsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 10.0
+offset_right = -14.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="BottomContainer/EffectsPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.8, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+text = "ТУТ ЭФФЕКТЫ РАСПИСАНЫ ТИПО"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="BottomContainer/EffectsPanel/VBox"]
+layout_mode = 2
+
+[node name="ApproachBadge" type="Label" parent="BottomContainer/EffectsPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "НАВЕДИТЕСЬ НА ВАРИАНТ ДИАЛОГА"
+
+[node name="EffectDescLabel" type="Label" parent="BottomContainer/EffectsPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Здесь отображаются эффекты, риски и слабости монстра."
+autowrap_mode = 2
+
+[node name="TraitSynergyLabel" type="Label" parent="BottomContainer/EffectsPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = ""
+autowrap_mode = 2
+
+[node name="SideEffectLabel" type="Label" parent="BottomContainer/EffectsPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.6, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = ""
+autowrap_mode = 2
+
+[node name="LoanDeltaLabel" type="Label" parent="BottomContainer/EffectsPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.95, 0.4, 1)
+theme_override_font_sizes/font_size = 13
+text = ""
+
+[node name="ItemsPanel" type="Panel" parent="BottomContainer"]
+custom_minimum_size = Vector2(210, 280)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+
+[node name="TitleLabel" type="Label" parent="BottomContainer/ItemsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 28.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.8, 0.35, 1)
+theme_override_font_sizes/font_size = 13
+text = "ПРЕДМЕТЫ"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="BottomContainer/ItemsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 28.0
+offset_right = -8.0
+offset_bottom = 36.0
+grow_horizontal = 2
+
+[node name="Scroll" type="ScrollContainer" parent="BottomContainer/ItemsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 38.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemsVBox" type="VBoxContainer" parent="BottomContainer/ItemsPanel/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6

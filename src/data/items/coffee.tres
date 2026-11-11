@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ShopItem" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ShopItem" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://src/core/shop_item.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/items/coffee.svg" id="2_icon"]
 
 [resource]
 script = ExtResource("1_script")
@@ -8,10 +9,10 @@ id = "coffee"
 item_name = "Офисный кофе из ведьмачьих трав"
 description = "Горький напиток, сваренный на перерыве. +25% к вероятности позитивных исходов при бросках диалога."
 cost = 300
+icon = ExtResource("2_icon")
 item_type = 0
 effect_value = 0.25
 is_consumed_on_use = false
 is_permanent = true
 jam_theme_tag = "Побочный эффект"
 side_effect_text = "Вызывает тахикардию и желание перебивать клиента."
-

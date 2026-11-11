@@ -3,14 +3,14 @@
 [ext_resource type="Script" path="res://src/ui/persuasion_meter/persuasion_meter.gd" id="1_script"]
 
 [node name="PersuasionMeter" type="Control"]
-custom_minimum_size = Vector2(220, 400)
+custom_minimum_size = Vector2(140, 310)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 220.0
-offset_bottom = 400.0
+offset_right = 140.0
+offset_bottom = 310.0
 script = ExtResource("1_script")
 
-[node name="BackgroundPanel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,109 +18,79 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HeaderLabel" type="Label" parent="."]
+[node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_top = 10.0
-offset_bottom = 36.0
-grow_horizontal = 2
-text = "Шкала склонения"
-horizontal_alignment = 1
-
-[node name="MeterContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -140.0
-offset_right = 80.0
-offset_bottom = 120.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 8.0
+offset_right = -6.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 4
 alignment = 1
 
-[node name="ScaleLabels" type="VBoxContainer" parent="MeterContainer"]
+[node name="TitleLabel" type="Label" parent="VBox"]
 layout_mode = 2
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="Top100" type="Label" parent="MeterContainer/ScaleLabels"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.9, 0.3, 1)
+theme_override_colors/font_color = Color(0.75, 0.75, 0.8, 1)
 theme_override_font_sizes/font_size = 11
-text = "+100% Согласен"
-vertical_alignment = 1
+text = "ШКАЛА ДОВЕРИЯ"
+horizontal_alignment = 1
 
-[node name="Top50" type="Label" parent="MeterContainer/ScaleLabels"]
+[node name="TopSuccessLabel" type="Label" parent="VBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.95, 0.4, 1)
+theme_override_font_sizes/font_size = 15
+text = "▲ ЗАЕБИСЬ"
+horizontal_alignment = 1
+
+[node name="PercentageLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "0%"
+horizontal_alignment = 1
+
+[node name="MeterTrack" type="Control" parent="VBox"]
+custom_minimum_size = Vector2(40, 170)
+layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.7, 0.9, 0.3, 1)
-theme_override_font_sizes/font_size = 11
-text = "+50% Склоняется"
-vertical_alignment = 1
 
-[node name="Center0" type="Label" parent="MeterContainer/ScaleLabels"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_font_sizes/font_size = 11
-text = " 0% Нейтрален"
-vertical_alignment = 1
-
-[node name="Bottom50" type="Label" parent="MeterContainer/ScaleLabels"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.9, 0.6, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "-50% Сомневается"
-vertical_alignment = 1
-
-[node name="Bottom100" type="Label" parent="MeterContainer/ScaleLabels"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.9, 0.2, 0.2, 1)
-theme_override_font_sizes/font_size = 11
-text = "-100% Отказ"
-vertical_alignment = 1
-
-[node name="VSlider" type="VSlider" parent="MeterContainer"]
-custom_minimum_size = Vector2(30, 240)
-layout_mode = 2
+[node name="VSlider" type="VSlider" parent="VBox/MeterTrack"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="PercentageLabel" type="Label" parent="."]
+[node name="PointerLabel" type="Label" parent="VBox/MeterTrack"]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -70.0
-offset_bottom = -44.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 18
-text = "0%"
-horizontal_alignment = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.0
+offset_right = -4.0
+offset_bottom = 12.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 14
+text = "►"
 
-[node name="StatusLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -42.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 12
-text = "Нейтральный (0%)"
+[node name="BottomFailLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.35, 0.3, 1)
+theme_override_font_sizes/font_size = 15
+text = "▼ ХУЁВО"
 horizontal_alignment = 1
 
 [node name="DeltaLabel" type="Label" parent="."]
@@ -131,12 +101,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = -20.0
-offset_right = 90.0
-offset_bottom = 6.0
+offset_left = 22.0
+offset_top = -14.0
+offset_right = 72.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 text = "+25%"
-
+horizontal_alignment = 1

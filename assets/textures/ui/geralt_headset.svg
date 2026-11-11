@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <!-- Background -->
+  <rect width="320" height="320" rx="16" fill="#1b1d24" stroke="#333846" stroke-width="3"/>
+  
+  <!-- Geralt Body/Armor -->
+  <path d="M70,300 Q160,250 250,300 L250,320 L70,320 Z" fill="#2d303b" stroke="#484f63" stroke-width="3"/>
+  <path d="M120,265 L160,320 L200,265 Z" fill="#442a20" stroke="#663e30" stroke-width="2"/>
+  <!-- Witcher Medallion (Wolf) -->
+  <polygon points="160,270 152,282 160,292 168,282" fill="#c0c5d0" stroke="#777f90" stroke-width="2"/>
+  
+  <!-- Neck -->
+  <rect x="142" y="200" width="36" height="50" fill="#e2c8b0"/>
+  
+  <!-- Head & Face -->
+  <ellipse cx="160" cy="165" rx="46" ry="54" fill="#edd0b8"/>
+  
+  <!-- Stubble / Beard -->
+  <path d="M124,175 Q160,230 196,175 Q160,215 124,175" fill="#cfd4dc" opacity="0.6"/>
+  
+  <!-- Geralt's Scar -->
+  <path d="M145,130 L142,175 L146,190" stroke="#9e4848" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Eyes (Cat-like amber eyes) -->
+  <ellipse cx="143" cy="158" rx="8" ry="5" fill="#f5c227"/>
+  <ellipse cx="177" cy="158" rx="8" ry="5" fill="#f5c227"/>
+  <line x1="143" y1="154" x2="143" y2="162" stroke="#111" stroke-width="2.5"/>
+  <line x1="177" y1="154" x2="177" y2="162" stroke="#111" stroke-width="2.5"/>
+  
+  <!-- Eyebrows (Serious/Frowning) -->
+  <path d="M134,150 L152,154" stroke="#c5cad2" stroke-width="3" stroke-linecap="round"/>
+  <path d="M186,150 L168,154" stroke="#c5cad2" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Nose & Mouth (Monotone expression) -->
+  <path d="M160,158 L158,175 L164,177" stroke="#b08b70" stroke-width="2" fill="none"/>
+  <line x1="150" y1="192" x2="170" y2="192" stroke="#7a4e3d" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- White Hair -->
+  <path d="M110,165 Q115,100 160,95 Q205,100 210,165 Q220,130 190,90 Q160,80 130,90 Q100,130 110,165 Z" fill="#f0f3f8" stroke="#d5dbe6" stroke-width="2"/>
+  <path d="M114,150 L126,190 L132,155" fill="#e8edf5"/>
+  <path d="M206,150 L194,190 L188,155" fill="#e8edf5"/>
+  <path d="M135,100 Q160,115 185,100 Q160,90 135,100 Z" fill="#e8edf5"/>
+  
+  <!-- Call Center Headset! (The core comedic element) -->
+  <!-- Headband -->
+  <path d="M106,160 C100,70 220,70 214,160" fill="none" stroke="#22252c" stroke-width="8" stroke-linecap="round"/>
+  <path d="M106,160 C100,70 220,70 214,160" fill="none" stroke="#505769" stroke-width="2" stroke-linecap="round"/>
+  <!-- Left Ear Cup -->
+  <rect x="100" y="145" width="14" height="34" rx="7" fill="#15171c" stroke="#61ff96" stroke-width="2"/>
+  <!-- Right Ear Cup -->
+  <rect x="206" y="145" width="14" height="34" rx="7" fill="#15171c" stroke="#484f60" stroke-width="2"/>
+  <!-- Microphone Boom -->
+  <path d="M107,170 Q115,210 152,205" fill="none" stroke="#15171c" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Mic Foam Tip with LED -->
+  <ellipse cx="154" cy="205" rx="6" ry="5" fill="#222" stroke="#61ff96" stroke-width="1.5"/>
+  <circle cx="155" cy="204" r="1.5" fill="#61ff96"/>
+</svg>

@@ -40,26 +40,35 @@ func _refresh_display() -> void:
 		hbox.theme_override_constants.separation = 16
 		panel.add_child(hbox)
 
+		if item.icon:
+			var icon_rect := TextureRect.new()
+			icon_rect.custom_minimum_size = Vector2(52, 52)
+			icon_rect.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			icon_rect.texture = item.icon
+			hbox.add_child(icon_rect)
+
 		var info_vbox := VBoxContainer.new()
 		info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		hbox.add_child(info_vbox)
 
 		var title := Label.new()
 		title.text = item.item_name + " — " + str(item.cost) + " орен"
-		title.theme_override_font_sizes.font_size = 16
+		title.add_theme_font_size_override("font_size", 16)
 		title.modulate = Color.GOLD
 		info_vbox.add_child(title)
 
 		var desc := Label.new()
 		desc.text = item.description
-		desc.theme_override_font_sizes.font_size = 13
+		desc.add_theme_font_size_override("font_size", 13)
 		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		info_vbox.add_child(desc)
 
 		if not item.side_effect_text.is_empty():
 			var jam_note := Label.new()
 			jam_note.text = "[" + item.jam_theme_tag + "]: " + item.side_effect_text
-			jam_note.theme_override_font_sizes.font_size = 11
+			jam_note.add_theme_font_size_override("font_size", 11)
 			jam_note.modulate = Color(0.9, 0.6, 0.4)
 			info_vbox.add_child(jam_note)
 
@@ -86,4 +95,3 @@ func _on_start_day_pressed() -> void:
 func _clear_items() -> void:
 	for child in items_container.get_children():
 		child.queue_free()
-

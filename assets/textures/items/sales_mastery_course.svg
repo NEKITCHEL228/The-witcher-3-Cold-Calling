@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="8" fill="#1b2820" stroke="#2a5235" stroke-width="2"/>
+  <!-- Witcher Axii Sign Symbol (Triangular hypnotic seal) -->
+  <circle cx="32" cy="32" r="20" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <polygon points="32,18 46,42 18,42" fill="none" stroke="#4ade80" stroke-width="3"/>
+  <circle cx="32" cy="34" r="5" fill="#86efac"/>
+</svg>

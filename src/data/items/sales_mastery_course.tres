@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ShopItem" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="ShopItem" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://src/core/shop_item.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/items/sales_mastery_course.svg" id="2_icon"]
 
 [resource]
 script = ExtResource("1_script")
@@ -8,10 +9,10 @@ id = "sales_mastery_course"
 item_name = "Курсы гипнотических продаж Знак Аксий"
 description = "Адаптация ведьмачьего знака Аксий под телефонную трубку. Каждый звонок начинается с +20% стартового склонения."
 cost = 800
+icon = ExtResource("2_icon")
 item_type = 4
 effect_value = 0.20
 is_consumed_on_use = false
 is_permanent = true
 jam_theme_tag = "Не тот герой"
 side_effect_text = "Клиенты периодически забывают свое имя после разговора."
-

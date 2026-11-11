@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <!-- Background -->
+  <rect width="320" height="320" rx="16" fill="#1b1d24" stroke="#333846" stroke-width="3"/>
+
+  <!-- Monster Cape/Body -->
+  <path d="M60,320 C80,240 120,240 160,240 C200,240 240,240 260,320 Z" fill="#20242c" stroke="#3c4352" stroke-width="3"/>
+
+  <!-- Neck -->
+  <rect x="142" y="190" width="36" height="55" fill="#3a483e"/>
+
+  <!-- Horns / Pointy Ears (from sketch) -->
+  <polygon points="120,135 90,65 135,115" fill="#4d5f52" stroke="#2c3a30" stroke-width="3"/>
+  <polygon points="200,135 230,65 185,115" fill="#4d5f52" stroke="#2c3a30" stroke-width="3"/>
+
+  <!-- Monster Head -->
+  <ellipse cx="160" cy="160" rx="55" ry="50" fill="#435547" stroke="#2b382f" stroke-width="3"/>
+
+  <!-- Glowing/Skeptical Monster Eyes -->
+  <ellipse cx="138" cy="150" rx="9" ry="6" fill="#ff4d4d"/>
+  <ellipse cx="182" cy="150" rx="9" ry="6" fill="#ff4d4d"/>
+  <circle cx="138" cy="150" r="3" fill="#ffee66"/>
+  <circle cx="182" cy="150" r="3" fill="#ffee66"/>
+
+  <!-- Eyebrows (Annoyed / Skeptical) -->
+  <line x1="126" y1="140" x2="148" y2="145" stroke="#1d2620" stroke-width="4" stroke-linecap="round"/>
+  <line x1="194" y1="140" x2="172" y2="145" stroke="#1d2620" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Snout / Fangs / Mouth (Grumpy like sketch) -->
+  <ellipse cx="160" cy="172" rx="16" ry="10" fill="#2b382f"/>
+  <path d="M140,188 Q160,180 180,188" stroke="#1a221d" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Two small fangs -->
+  <polygon points="148,186 152,194 154,186" fill="#f0e6c8"/>
+  <polygon points="166,186 168,194 172,186" fill="#f0e6c8"/>
+</svg>
